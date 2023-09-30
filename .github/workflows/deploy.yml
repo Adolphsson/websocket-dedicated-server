@@ -19,8 +19,9 @@ jobs:
           command_timeout: 200m
           script: |
             cd /home/apps/mystack/websocket-dedicated-server
-            pkill -f nodejs
             git pull
+            pkill -f "node db"
+            pkill -f "node server"
             cd database
             npm install
             nohup node db &
