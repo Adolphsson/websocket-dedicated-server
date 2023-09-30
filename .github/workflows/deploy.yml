@@ -1,0 +1,30 @@
+name: CI
+
+on: [push]
+
+jobs:
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script_stop: true
+          command_timeout: 200m
+          script: /
+            cd /home/apps/mystack/websocket-dedicated-server
+            pkill -f nodejs
+            git pull
+            cd database
+            npm install
+            nohup node db &
+            cd ../server
+            npm install
+            nohup node server &
+
