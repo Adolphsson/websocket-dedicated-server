@@ -111,7 +111,7 @@ app.post('/register', async (req, res) => {
             from: process.env.SMTP_USER,
             to: email,
             subject: 'Confirm Your Email',
-            text: `Please confirm your email by entering this code ${confirmationCode}' // in here ${process.env.FRONTEND_URL}/confirm`
+            text: `Please confirm your email by entering this code ${confirmationCode}` // in here ${process.env.FRONTEND_URL}/confirm`
         };
 
         await transporter.sendMail(mailOptions);
