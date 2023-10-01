@@ -80,7 +80,14 @@ app.post('/register', async (req, res) => {
 
     const existingUser = await UserModel.findOne({ email: email });
     if (existingUser) {
-        return res.status(400).send({ action: 'register_failed', message: 'Email already exists.' });
+        if (user.status !== 'active') {
+            // The user is not active and can be removed
+            // This will avoid the risk of being locked out if he/she is not verified before code expires
+            await UserModel.deleteOne({ email: email });
+        }
+        else {
+            return res.status(400).send({ action: 'register_failed', message: 'Email already exists.' });
+        }
     }
 
     if (!username || !password || !email) {
