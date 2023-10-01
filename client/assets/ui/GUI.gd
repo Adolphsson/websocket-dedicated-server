@@ -56,3 +56,7 @@ func change_button_state(value):
 	$Screens/Register/Panel/EmailInput.editable = !value
 	$Screens/Register/Panel/RegisterButton.disabled = value  
 	$Screens/Register/Panel/CancelButton.disabled = value 
+	$Screens/Verify/Panel/VerifyButton.disabled = value 
+	$Screens/Verify/Panel/CancelButton.disabled = value 
+	$Screens/Verify/Panel/CodeInput.editable = !value
+

@@ -27,7 +27,7 @@ func _process(delta):
 		var code = _ws.get_close_code()
 		var reason = _ws.get_close_reason()
 		GlobalSignals.emit_signal("CHANGE_SCREEN","Menu")
-		GlobalSignals.emit_signal("SEND_NOTIFICATION","Disconnected...")
+		GlobalSignals.emit_signal("SEND_NOTIFICATION","Disconnected, " + _ws.get_close_reason())
 		try_server_connection(_server_url)
 		networkTimer.start(1)
 		set_process(false) # Stop processing.
@@ -40,7 +40,7 @@ func try_server_connection(url):
 	set_process(true)
 	if state == WebSocketPeer.STATE_CLOSED:
 		GlobalSignals.emit_signal("CHANGE_PLAYER_STATE",false)
-		GlobalSignals.emit_signal("SEND_NOTIFICATION","Disconnected...")
+		GlobalSignals.emit_signal("SEND_NOTIFICATION","Disconnected, " + _ws.get_close_reason())
 		_ws.connect_to_url(url)
 	elif state == WebSocketPeer.STATE_CONNECTING:
 		GlobalSignals.emit_signal("CHANGE_PLAYER_STATE",false)

@@ -1,3 +1,8 @@
+Node
+LineEdit
+Button
+Panel
+Control
 Label
 ColorRect
 AudioListener2D
@@ -14,8 +19,6 @@ Marker2D
 Node2D
 TileMap
 CanvasLayer
-Panel
-Control
 PanelContainer
 GridContainer
 HBoxContainer
@@ -24,9 +27,6 @@ PointLight2D
 DirectionalLight2D
 CanvasModulate
 AnimationPlayer
-Button
 TextEdit
-LineEdit
 Camera2D
 CharacterBody2D
-Node

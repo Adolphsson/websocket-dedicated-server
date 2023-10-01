@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c5xo2p1r7tn85"]
+[gd_scene load_steps=26 format=3 uid="uid://c5xo2p1r7tn85"]
 
 [ext_resource type="Script" path="res://assets/ui/GUI.gd" id="1_0rf7o"]
 [ext_resource type="Script" path="res://assets/ui/states/StateManager.gd" id="1_054fu"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" path="res://assets/ui/screens/ScreenPause.gd" id="5_fco3f"]
 [ext_resource type="Script" path="res://assets/ui/screens/ScreenPlay.gd" id="6_t4syb"]
 [ext_resource type="Script" path="res://assets/ui/states/StatePlay.gd" id="6_unm0c"]
+[ext_resource type="Script" path="res://assets/ui/screens/ScreenVerify.gd" id="8_pkru0"]
+[ext_resource type="Script" path="res://assets/ui/states/StateVerify.gd" id="16_62mn6"]
 
 [sub_resource type="Animation" id="Animation_4rh0h"]
 length = 0.001
@@ -454,6 +456,79 @@ libraries = {
 "": SubResource("AnimationLibrary_t2sxm")
 }
 
+[node name="Verify" type="Control" parent="Screens"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_pkru0")
+
+[node name="Panel" type="Panel" parent="Screens/Verify"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -212.0
+offset_top = -166.0
+offset_right = 212.0
+offset_bottom = 166.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_ftw3x")
+
+[node name="CodeInput" type="LineEdit" parent="Screens/Verify/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -23.0
+offset_right = 85.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_ftw3x")
+placeholder_text = "CODE"
+alignment = 1
+virtual_keyboard_type = 2
+
+[node name="VerifyButton" type="Button" parent="Screens/Verify/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -33.0
+offset_top = -47.0
+offset_right = 33.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "VERIFY"
+
+[node name="CancelButton" type="Button" parent="Screens/Verify/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -198.0
+offset_top = -47.0
+offset_right = -154.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "BACK"
+
 [node name="GameNotifications" type="Label" parent="."]
 layout_direction = 1
 layout_mode = 1
@@ -494,6 +569,10 @@ screenPath = NodePath("../../Screens/Pause")
 script = ExtResource("6_unm0c")
 screenPath = NodePath("../../Screens/Play")
 
+[node name="Verify" type="Node" parent="StateManager"]
+script = ExtResource("16_62mn6")
+screenPath = NodePath("../../Screens/Verify")
+
 [node name="Animations" type="AnimationPlayer" parent="."]
 
 [connection signal="timeout" from="NotificationTimer" to="." method="_on_timer_timeout"]
@@ -507,3 +586,6 @@ screenPath = NodePath("../../Screens/Play")
 [connection signal="pressed" from="Screens/Register/Panel/RegisterButton" to="Screens/Register" method="_on_register_button_pressed"]
 [connection signal="pressed" from="Screens/Register/Panel/CancelButton" to="Screens/Register" method="_on_cancel_button_pressed"]
 [connection signal="text_submitted" from="Screens/Play/TextInput" to="Screens/Play" method="_on_text_input_text_submitted"]
+[connection signal="text_submitted" from="Screens/Verify/Panel/CodeInput" to="Screens/Verify" method="_on_code_input_text_submitted"]
+[connection signal="pressed" from="Screens/Verify/Panel/VerifyButton" to="Screens/Verify" method="_on_verify_button_pressed"]
+[connection signal="pressed" from="Screens/Verify/Panel/CancelButton" to="Screens/Verify" method="_on_cancel_button_pressed"]

@@ -1,9 +1,10 @@
 extends Node
 
 var httpRequest = HTTPRequest.new()
-var dbURL = ""
+var dbURL = "http://game.adolphsson.se:8081"
 
 var username = ""
+var email = ""
 
 func _ready():
 	httpRequest.request_completed.connect(self._on_request_completed)
@@ -13,6 +14,11 @@ func register(username,password,email):
 	var data = {"username":username,"password":password,"email":email}
 	http_request(dbURL+"/register",data)
 	GlobalSignals.emit_signal("SEND_NOTIFICATION","Registering account...")
+
+func confirm(email, code):
+	var data = {"email":email,"code":code}
+	http_request(dbURL+"/confirm_code",data)
+	GlobalSignals.emit_signal("SEND_NOTIFICATION","Verifying account...")
 
 func login(username,password):
 	var data = {"email":username,"password":password}
@@ -51,6 +57,10 @@ func _on_request_completed(result, response_code, headers, body):
 				username = response["username"]
 				Server.try_server_connection(Server._server_url)
 			"register_successful":
+				GlobalSignals.emit_signal("CHANGE_SCREEN","Verify")
+				GlobalSignals.emit_signal("SEND_NOTIFICATION",response["message"])
+				email = response["email"]
+			"verify_successful":
 				GlobalSignals.emit_signal("CHANGE_SCREEN","Menu")
 				GlobalSignals.emit_signal("SEND_NOTIFICATION",response["message"])
 			"retrieve_player_info":
@@ -61,13 +71,16 @@ func _on_request_completed(result, response_code, headers, body):
 		httpRequest.request_completed.disconnect(self._on_request_completed)
 	else:
 		var json = JSON.new()
-		json.parse(body.get_string_from_utf8())
+		var resp = body.get_string_from_utf8()
+		json.parse(resp)
 		var response = json.get_data()
-		if "action" in response:
+		if response != null && "action" in response:
 			match response["action"]:
 				"login_failed":
 					GlobalSignals.emit_signal("SEND_NOTIFICATION",response["message"])
 				"register_failed":
+					GlobalSignals.emit_signal("SEND_NOTIFICATION",response["message"])
+				"verify_failed":
 					GlobalSignals.emit_signal("SEND_NOTIFICATION",response["message"])
 				"update_failed":
 					GlobalSignals.emit_signal("SEND_NOTIFICATION",response["message"])
