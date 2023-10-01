@@ -1,7 +1,7 @@
 extends Node
 
 var httpRequest = HTTPRequest.new()
-var dbURL = "http://game.adolphsson.se:8081"
+var dbURL = "https://game.adolphsson.se:445"
 
 var username = ""
 var email = ""
