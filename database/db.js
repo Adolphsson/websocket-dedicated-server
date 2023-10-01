@@ -104,13 +104,13 @@ app.post('/register', async (req, res) => {
             from: process.env.SMTP_USER,
             to: email,
             subject: 'Confirm Your Email',
-            text: `Please confirm your email by entering this code ${confirmationCode} in here ${process.env.FRONTEND_URL}/confirm`
+            text: `Please confirm your email by entering this code ${confirmationCode}' // in here ${process.env.FRONTEND_URL}/confirm`
         };
 
         await transporter.sendMail(mailOptions);
         await newUser.save();
 
-        return res.status(200).send({ action: 'register_successful', message: 'User registered. Please check your email for the confirmation code.' });
+        return res.status(200).send({ action: 'register_successful', message: 'User registered. Please check your email for the confirmation code.', email: email });
 
     } catch (err) {
         console.error(err);
