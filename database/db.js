@@ -154,11 +154,11 @@ app.post('/confirm_code', async (req, res) => {
         const user = await UserModel.findOne({ email: email });
 
         if (!user) {
-            return res.status(400).send({ message: 'User not found.' });
+            return res.status(400).send({ action: 'verify_failed', message: 'User not found.' });
         }
 
         if (user.confirmationExpires < Date.now()) {
-            return res.status(400).send({ message: 'Code has expired.' });
+            return res.status(400).send({ action: 'verify_failed', message: 'Code has expired.' });
         }
 
         if (user.confirmationToken === code) {
@@ -166,13 +166,13 @@ app.post('/confirm_code', async (req, res) => {
             user.confirmationToken = undefined;
             user.confirmationExpires = undefined;
             await user.save();
-            return res.status(200).send({ message: 'Email confirmed successfully.' });
+            return res.status(200).send({ action: 'verify_successful', message: 'Email confirmed successfully.' });
         } else {
-            return res.status(400).send({ message: 'Invalid confirmation code.' });
+            return res.status(400).send({ action: 'verify_failed', message: 'Invalid confirmation code.' });
         }
     } catch (error) {
         console.error(error);
-        return res.status(500).send({ message: 'Error confirming email.' });
+        return res.status(500).send({ action: 'verify_failed', message: 'Error confirming email.' });
     }
 });
 
