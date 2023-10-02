@@ -11,3 +11,4 @@ res://global/controllers/AudioPlayer.tscn
 res://maps/Hub.tscn
 res://assets/peer/Peer.tscn
 res://global/network/server/Server.tscn
+res://global/network/server/Server.gd

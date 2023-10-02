@@ -29,4 +29,9 @@ function broadcast(wss, ws, parsed){
    });
 };
 
+//This function will respond to the client that send the request and can be used to measure the round trip time.
+function ping(wss, ws, parsed){
+    ws.send(JSON.stringify({ action: 'pong', data: parsed.data }));
+};
+
 module.exports = { readyPlayer, receivePlayerState, broadcast };

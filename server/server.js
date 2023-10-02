@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const { savePlayerData, uuidToUsername } = require('./components/dataHandler');
 const { stateProcess, playerStateCollection } = require('./components/stateProcessing');
-const { readyPlayer, broadcast, receivePlayerState } = require('./components/serverActions');
+const { readyPlayer, broadcast, receivePlayerState, ping } = require('./components/serverActions');
 
 const app = express();
 
@@ -23,6 +23,7 @@ const actionHandlers = {
     'readyPlayer': (wss, ws, parsed) => readyPlayer(wss, ws, parsed),
     'receivePlayerState': (wss, ws, parsed) => receivePlayerState(wss, ws, parsed),
     'broadcast': (wss, ws, parsed) => broadcast(wss, ws, parsed),
+    'ping': (wss, ws, parsed) => ping(wss, ws, parsed),
 };
 
 wss.on('connection', (ws, req) => {

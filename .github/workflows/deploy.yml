@@ -18,9 +18,9 @@ jobs:
           script_stop: true
           command_timeout: 200m
           script: |
-            pkill -f "node db"
-            pkill -f "node server"
-            pkill -f "node website"
+            pkill -f "node db" > /dev/null
+            pkill -f "node server" > /dev/null
+            pkill -f "node website" > /dev/null
             cd /home/apps/mystack/websocket-dedicated-server
             git pull
             cd database

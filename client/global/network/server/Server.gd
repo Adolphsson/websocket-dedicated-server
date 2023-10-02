@@ -15,6 +15,7 @@ func _process(delta):
 			GlobalSignals.emit_signal("SEND_NOTIFICATION","Connected...")
 		reconnecting = false
 		connected = true
+		$PingTimer.start()
 		while _ws.get_available_packet_count():
 			on_data_received()
 	elif state == WebSocketPeer.STATE_CLOSING:
@@ -24,10 +25,11 @@ func _process(delta):
 	elif state == WebSocketPeer.STATE_CLOSED:
 		GlobalSignals.emit_signal("CHANGE_PLAYER_STATE",false)
 		connected = false
+		$PingTimer.stop()
 		var code = _ws.get_close_code()
 		var reason = _ws.get_close_reason()
 		GlobalSignals.emit_signal("CHANGE_SCREEN","Menu")
-		GlobalSignals.emit_signal("SEND_NOTIFICATION","Disconnected, " + _ws.get_close_reason())
+		GlobalSignals.emit_signal("SEND_NOTIFICATION","Disconnected: " + reason)
 		try_server_connection(_server_url)
 		networkTimer.start(1)
 		set_process(false) # Stop processing.
@@ -40,7 +42,7 @@ func try_server_connection(url):
 	set_process(true)
 	if state == WebSocketPeer.STATE_CLOSED:
 		GlobalSignals.emit_signal("CHANGE_PLAYER_STATE",false)
-		GlobalSignals.emit_signal("SEND_NOTIFICATION","Disconnected, " + _ws.get_close_reason())
+		GlobalSignals.emit_signal("SEND_NOTIFICATION","Disconnected...")
 		_ws.connect_to_url(url)
 	elif state == WebSocketPeer.STATE_CONNECTING:
 		GlobalSignals.emit_signal("CHANGE_PLAYER_STATE",false)
@@ -57,6 +59,10 @@ func on_data_received():
 	var parsedPackage = JSON.parse_string(package)
 	if "action" in parsedPackage:
 		match parsedPackage["action"]:
+			"pong":
+				if "data" in parsedPackage:
+					if "sent" in parsedPackage["data"]:
+						print('ttl: ' + (Time.get_ticks_msec() - parsedPackage["data"]["sent"]) + ' ms')
 			"receive_world_state":
 				world.update_world_state(parsedPackage["data"])
 			"assignUUID":
@@ -71,3 +77,8 @@ func on_data_received():
 	else:
 #		print("Invalid action: ", parsedPackage)
 		pass
+
+
+func _on_ping_timer_timeout():
+	broadcast("ping", {"sent":Time.get_ticks_msec()})
+	pass # Replace with function body.
