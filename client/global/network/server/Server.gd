@@ -62,7 +62,7 @@ func on_data_received():
 			"pong":
 				if "data" in parsedPackage:
 					if "sent" in parsedPackage["data"]:
-						print('ttl: ' + (Time.get_ticks_msec() - parsedPackage["data"]["sent"]) + ' ms')
+						print('ttl: ' + str(Time.get_ticks_msec() - parsedPackage["data"]["sent"]) + ' ms')
 			"receive_world_state":
 				world.update_world_state(parsedPackage["data"])
 			"assignUUID":
