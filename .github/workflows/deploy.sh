@@ -1,8 +1,8 @@
 #!/bin/sh
 
 pkill -f "node db" --signal SIGHUP
-pkill -f "node server" --signal SIGHUP
-pkill -f "node website" --signal SIGHUP
+pkill -f "node server"
+pkill -f "node website"
 cd /home/apps/mystack/websocket-dedicated-server
 git pull
 cd database
@@ -14,3 +14,4 @@ nohup node server > nohup-server.out 2> nohup-server.err < /dev/null &
 cd ../website
 npm install
 nohup node website > nohup-website.out 2> nohup-website.err < /dev/null &
+exit 0
