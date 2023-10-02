@@ -13,9 +13,9 @@ func _process(delta):
 			broadcast("readyPlayer",{"username":Database.username})
 			GlobalSignals.emit_signal("CHANGE_PLAYER_STATE",true)
 			GlobalSignals.emit_signal("SEND_NOTIFICATION","Connected...")
+			$PingTimer.start()
 		reconnecting = false
 		connected = true
-		$PingTimer.start()
 		while _ws.get_available_packet_count():
 			on_data_received()
 	elif state == WebSocketPeer.STATE_CLOSING:

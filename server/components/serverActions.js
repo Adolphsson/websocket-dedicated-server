@@ -34,4 +34,4 @@ function ping(wss, ws, parsed){
     ws.send(JSON.stringify({ action: 'pong', data: parsed.data }));
 };
 
-module.exports = { readyPlayer, receivePlayerState, broadcast };
+module.exports = { readyPlayer, receivePlayerState, broadcast, ping };
