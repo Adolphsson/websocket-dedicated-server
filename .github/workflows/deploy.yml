@@ -18,18 +18,18 @@ jobs:
           script_stop: true
           command_timeout: 200m
           script: |
-            pkill -f "node db" > /dev/null
-            pkill -f "node server" > /dev/null
-            pkill -f "node website" > /dev/null
+            pkill -f "node db"
+            pkill -f "node server"
+            pkill -f "node website"
             cd /home/apps/mystack/websocket-dedicated-server
             git pull
             cd database
             npm install
-            nohup node db > nohup-db.out 2> nohup-db.err < /dev/null &
+            nohup node db > /dev/null 2>&1 &
             cd ../server
             npm install
-            nohup node server > nohup-server.out 2> nohup-server.err < /dev/null &
+            nohup node server > /dev/null 2>&1 &
             cd ../website
             npm install
-            nohup node website > nohup-website.out 2> nohup-website.err < /dev/null &
+            nohup node website > /dev/null 2>&1 &
             exit
