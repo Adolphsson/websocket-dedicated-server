@@ -18,4 +18,5 @@ jobs:
           script_stop: true
           command_timeout: 200m
           script: |
+            cd /home/apps/mystack/websocket-dedicated-server/.github/workflows/
             ./deploy.sh
