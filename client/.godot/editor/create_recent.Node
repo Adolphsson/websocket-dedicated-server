@@ -1,3 +1,9 @@
+MeshInstance3D
+DirectionalLight3D
+CollisionShape3D
+Camera3D
+CharacterBody3D
+CharacterBody2D
 Timer
 Node
 LineEdit
@@ -24,9 +30,3 @@ GridContainer
 HBoxContainer
 VBoxContainer
 PointLight2D
-DirectionalLight2D
-CanvasModulate
-AnimationPlayer
-TextEdit
-Camera2D
-CharacterBody2D

@@ -3,8 +3,13 @@ extends Control
 @onready var userInput = $Panel/UserInput
 @onready var passwordInput = $Panel/PasswordInput
 
+const LOGIN_FILE = "user://login.txt"
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if FileAccess.file_exists(LOGIN_FILE):
+		var file = FileAccess.open(LOGIN_FILE, FileAccess.READ)
+		userInput.text = file.get_as_text(true)
 	pass # Replace with function body.
 
 
@@ -15,6 +20,8 @@ func _process(delta):
 
 func _on_login_button_pressed():
 	Database.login(userInput.text,passwordInput.text)
+	var file = FileAccess.open(LOGIN_FILE, FileAccess.WRITE)
+	file.store_string(userInput.text)
 
 func _on_register_button_pressed():
 	GlobalSignals.emit_signal("CHANGE_SCREEN","Register")
