@@ -12,10 +12,9 @@ const app = express();
 
 const corsOptions={
     origin:'*',
-    methods:'POST',
+    methods:'POST,GET',
     allowHeaders:['Content-Type',"Authorization"]
 }
-app.use('/healthcheck', require('express-healthcheck')());
 app.use(cors(corsOptions));
 app.use(bodyParser.json({ limit: '50mb' }));
 
@@ -69,6 +68,7 @@ const transporter = nodemailer.createTransport({
 });
 
 app.use(bodyParser.json());
+app.use('/healthcheck', require('express-healthcheck')());
 
 
 function generateConfirmationCode() {
