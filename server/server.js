@@ -8,7 +8,7 @@ const { stateProcess, playerStateCollection } = require('./components/stateProce
 const { readyPlayer, broadcast, receivePlayerState, ping } = require('./components/serverActions');
 
 const app = express();
-
+app.use ('/healthcheck', require ('express-healthcheck') ());
 //Start server
 const PORT = '8080'
 const server = app.listen(PORT, '0.0.0.0', () => {

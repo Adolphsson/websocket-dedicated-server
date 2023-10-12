@@ -38,6 +38,10 @@ window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 mouse_cursor/custom_image="res://sprites/ui/cursor.png"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 move_left={

@@ -15,6 +15,7 @@ const corsOptions={
     methods:'POST',
     allowHeaders:['Content-Type',"Authorization"]
 }
+app.use('/healthcheck', require('express-healthcheck')());
 app.use(cors(corsOptions));
 app.use(bodyParser.json({ limit: '50mb' }));
 
@@ -73,6 +74,7 @@ app.use(bodyParser.json());
 function generateConfirmationCode() {
     return Math.floor(100000 + Math.random() * 900000).toString();
 }
+
 //Route to register new users.
 //Send a http request to this route to register.
 app.post('/register', async (req, res) => {
