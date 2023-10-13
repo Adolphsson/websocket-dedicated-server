@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 //setting middleware
-app.use ('/healthcheck', require ('express-healthcheck') ());
+app.use ('/healthcheck', require ('express-healthcheck')());
 app.use(express.static(__dirname + '/game', {
   setHeaders: (res) => {
     res.set('Cross-Origin-Opener-Policy', 'same-origin');
