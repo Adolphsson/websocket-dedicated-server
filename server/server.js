@@ -10,7 +10,10 @@ const { readyPlayer, broadcast, receivePlayerState, ping } = require('./componen
 const app = express();
 app.use ('/healthcheck', require ('express-healthcheck')({
     healthy: function () {
-        return { players: Object.keys(clients).length };
+        return {
+            uptime: process.uptime(), 
+            players: Object.keys(clients).length
+        };
     }
 }));
 //Start server
