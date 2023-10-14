@@ -7,6 +7,11 @@ extends Control
 @onready var notificationAnim = $NotificationAnim
 @onready var notificationTimer = $NotificationTimer
 
+var INPUT_KEYBOARD = 0
+var INPUT_CONTROLLER = 1
+var INPUT_TOUCH = 2
+var current_input_mode = INPUT_KEYBOARD
+
 var screens
 var player
 func _ready() -> void:
@@ -60,3 +65,23 @@ func change_button_state(value):
 	$Screens/Verify/Panel/CancelButton.disabled = value 
 	$Screens/Verify/Panel/CodeInput.editable = !value
 
+func _input(event):
+	if(event is InputEventKey):
+		current_input_mode = INPUT_KEYBOARD
+	elif(event is InputEventJoypadButton):
+		current_input_mode = INPUT_CONTROLLER
+	elif(event is InputEventMouseButton):
+		current_input_mode = INPUT_KEYBOARD
+	elif(event is InputEventScreenTouch):
+		current_input_mode = INPUT_TOUCH
+	#else:
+	#	# Do stuff
+	#	print('??')
+
+
+func _on_user_input_focus_entered():
+	if (current_input_mode == INPUT_TOUCH || current_input_mode == INPUT_CONTROLLER):
+		DisplayServer.virtual_keyboard_show($Screens/Menu/Panel/UserInput.text)
+
+func _on_input_focus_exited():
+	DisplayServer.virtual_keyboard_hide()
