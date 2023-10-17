@@ -4,8 +4,8 @@ extends BaseState
 func enter() -> void:
 	super.enter()
 
-func input(event: InputEvent) -> BaseState:
+func input(_event: InputEvent) -> BaseState:
 	return null
 
-func physics_process(delta: float) -> BaseState:
+func physics_process(_delta: float) -> BaseState:
 	return null

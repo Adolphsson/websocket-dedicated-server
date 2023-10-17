@@ -11,11 +11,11 @@ func enter() -> void:
 
 func exit() -> void:
 	pass
-func input(event: InputEvent) -> PlayerBaseState:
+func input(_event: InputEvent) -> PlayerBaseState:
 	return null
 
-func process(delta: float) -> PlayerBaseState:
+func process(_delta: float) -> PlayerBaseState:
 	return null
 
-func physics_process(delta: float) -> PlayerBaseState:
+func physics_process(_delta: float) -> PlayerBaseState:
 	return null

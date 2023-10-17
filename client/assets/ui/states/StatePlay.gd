@@ -19,9 +19,9 @@ func input(event: InputEvent) -> BaseState:
 			screenNode.animations.play("show_chat")
 	return null
 
-func physics_process(delta: float) -> BaseState:
+func physics_process(_delta: float) -> BaseState:
 	return null
 
-func process(delta: float) -> BaseState:
+func process(_delta: float) -> BaseState:
 	return null
 

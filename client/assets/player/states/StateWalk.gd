@@ -13,10 +13,10 @@ func enter() -> void:
 	_on_timer_timeout()
 	super.enter()
 
-func input(event: InputEvent) -> PlayerBaseState:
+func input(_event: InputEvent) -> PlayerBaseState:
 	return null
 
-func physics_process(delta: float) -> PlayerBaseState:
+func physics_process(_delta: float) -> PlayerBaseState:
 	var inputDir = player.move(moveSpeed)
 	if inputDir == Vector2.ZERO:
 		return idleState

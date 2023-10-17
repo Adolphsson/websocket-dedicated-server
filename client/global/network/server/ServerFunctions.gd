@@ -7,8 +7,7 @@ func broadcast(action, data):
 		"action": action,
 		"data": data
 	}
-	var json = JSON.new()
-	var parsedData = json.stringify(message)
+	var parsedData = JSON.stringify(message)
 	_ws.send_text(parsedData)
 
 #client-requests

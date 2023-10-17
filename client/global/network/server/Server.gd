@@ -5,7 +5,7 @@ extends ServerFunctions
 func _ready():
 	set_process(false)
 	
-func _process(delta):
+func _process(_delta):
 	_ws.poll()
 	var state = _ws.get_ready_state()
 	if state == WebSocketPeer.STATE_OPEN:
@@ -26,7 +26,7 @@ func _process(delta):
 		GlobalSignals.emit_signal("CHANGE_PLAYER_STATE",false)
 		connected = false
 		$PingTimer.stop()
-		var code = _ws.get_close_code()
+		#var code = _ws.get_close_code()
 		var reason = _ws.get_close_reason()
 		GlobalSignals.emit_signal("CHANGE_SCREEN","Menu")
 		GlobalSignals.emit_signal("SEND_NOTIFICATION","Disconnected: " + reason)
@@ -55,7 +55,6 @@ func try_server_connection(url):
 
 func on_data_received():
 	var package = (_ws.get_packet().get_string_from_utf8())
-	var json = JSON.new()
 	var parsedPackage = JSON.parse_string(package)
 	if "action" in parsedPackage:
 		match parsedPackage["action"]:

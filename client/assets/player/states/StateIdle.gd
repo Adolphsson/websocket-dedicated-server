@@ -6,7 +6,7 @@ extends PlayerBaseState
 func enter() -> void:
 	super.enter()
 
-func input(event: InputEvent) -> PlayerBaseState:
+func input(_event: InputEvent) -> PlayerBaseState:
 	var inputDir = Vector2(
 		Input.get_action_strength("move_right") - Input.get_action_raw_strength("move_left"),
 		Input.get_action_strength("move_backward") - Input.get_action_raw_strength("move_forward")
@@ -15,5 +15,5 @@ func input(event: InputEvent) -> PlayerBaseState:
 		return walkState
 	return null
 
-func physics_process(delta: float) -> PlayerBaseState:
+func physics_process(_delta: float) -> PlayerBaseState:
 	return null

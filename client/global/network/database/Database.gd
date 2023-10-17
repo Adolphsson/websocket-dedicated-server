@@ -35,7 +35,7 @@ func update_player_info(description, arrestInfo):
 
 func http_request(url,data) -> void:
 	var headers = ["Content-Type: application/json"]
-	var body = JSON.new().stringify(data)
+	var body = JSON.stringify(data)
 	var error = httpRequest.request(url, headers, HTTPClient.METHOD_POST, body)
 	if error == OK:
 		GlobalSignals.emit_signal("CHANGE_BUTTON_STATE",true)
@@ -44,8 +44,7 @@ func http_request(url,data) -> void:
 		GlobalSignals.emit_signal("CHANGE_BUTTON_STATE",false)
 		GlobalSignals.emit_signal("SEND_NOTIFICATION","Error sending request.")
 
-func _on_request_completed(result, response_code, headers, body):
-	var jsonResult = {}
+func _on_request_completed(_result, response_code, _headers, body):
 	if response_code == 200:
 		var json = JSON.new()
 		json.parse(body.get_string_from_utf8())

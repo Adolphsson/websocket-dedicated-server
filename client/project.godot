@@ -25,6 +25,7 @@ Database="*res://global/network/database/Database.gd"
 Server="*res://global/network/server/Server.tscn"
 GlobalValues="*res://global/GlobalValues.gd"
 AudioController="*res://global/controllers/AudioController.gd"
+EffectController="*res://global/controllers/EffectController.gd"
 
 [display]
 

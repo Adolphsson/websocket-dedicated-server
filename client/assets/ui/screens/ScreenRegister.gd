@@ -4,7 +4,7 @@ extends Control
 @onready var passwordInput = $Panel/PasswordInput
 @onready var emailInput = $Panel/EmailInput
 
-func _process(delta):
+func _process(_delta):
 	pass
 
 func _on_cancel_button_pressed():
@@ -34,5 +34,5 @@ func _on_user_input_text_submitted(new_text):
 		GlobalSignals.emit_signal("SEND_NOTIFICATION","Username not filled...")
 
 
-func _on_password_input_2_text_submitted(new_text):
+func _on_password_input_2_text_submitted(_new_text):
 	pass # Replace with function body.

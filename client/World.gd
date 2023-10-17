@@ -6,6 +6,7 @@ var lastWorldState = 0
 
 func spawn_player(playerID, spawnPosition):
 	if Database.username == playerID:
+		EffectController.play_fx(spawnPosition,$Player)
 		pass
 	else:
 		spawnPosition = GlobalFunctions.string_to_vector2(spawnPosition)
@@ -13,6 +14,7 @@ func spawn_player(playerID, spawnPosition):
 		newPlayer.global_position = spawnPosition
 		newPlayer.name = str(playerID)
 		peers.add_child(newPlayer)
+		EffectController.play_fx(spawnPosition,newPlayer)
 
 func despawn_player(player_id):
 	var path = peers.get_path()

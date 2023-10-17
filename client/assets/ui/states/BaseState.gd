@@ -14,17 +14,19 @@ func _ready():
 
 func enter() -> void:
 	screenNode.show()
-	gui.animations.play(enter_animation)
+	if (enter_animation):
+		gui.animations.play(enter_animation)
 
 func exit() -> void:
 	screenNode.hide()
-	gui.animations.play(exit_animation)
+	if (exit_animation):
+		gui.animations.play(exit_animation)
 
-func input(event: InputEvent) -> BaseState:
+func input(_event: InputEvent) -> BaseState:
 	return null
 
-func process(delta: float) -> BaseState:
+func process(_delta: float) -> BaseState:
 	return null
 
-func physics_process(delta: float) -> BaseState:
+func physics_process(_delta: float) -> BaseState:
 	return null

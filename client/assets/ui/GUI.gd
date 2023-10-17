@@ -77,11 +77,3 @@ func _input(event):
 	#else:
 	#	# Do stuff
 	#	print('??')
-
-
-func _on_user_input_focus_entered():
-	if (current_input_mode == INPUT_TOUCH || current_input_mode == INPUT_CONTROLLER):
-		DisplayServer.virtual_keyboard_show($Screens/Menu/Panel/UserInput.text)
-
-func _on_input_focus_exited():
-	DisplayServer.virtual_keyboard_hide()
