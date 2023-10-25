@@ -9,6 +9,7 @@ extends CharacterBody2D
 var controlling = true
 var playerState = {}
 
+
 func _ready() -> void:
 	GlobalValues.player = self
 	GlobalSignals.connect("CHANGE_PLAYER_STATE",change_player_state)
@@ -17,14 +18,17 @@ func _ready() -> void:
 	states.init(self)
 	change_player_state(false)
 
+
 func change_player_state(value):
 	set_process_unhandled_input(value)
 	set_process(value)
 	set_physics_process(value)
 	set_process_input(value)
 
+
 func change_player_control_state(value):
 	controlling = value
+
 
 func load_player_state(state):
 	if state:
@@ -34,21 +38,24 @@ func load_player_state(state):
 			traits.currentDirection = state["D"][0]
 			traits.flip_sprite(state["D"][1])
 	$Tooltip.tooltip_text = Database.username
-	
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if controlling:
 		states.input(event)
-	
+
+
 func _physics_process(delta: float) -> void:
 	if controlling:
 		states.physics_process(delta)
+
 
 func _process(delta: float) -> void:
 	if Server.connected:
 		define_player_state()
 	if controlling:
 		states.process(delta)
+
 
 func move(moveSpeed):
 	var inputDir = Vector2(
@@ -62,6 +69,23 @@ func move(moveSpeed):
 	move_and_slide()
 	return inputDir
 
+
 func define_player_state():
-	playerState = {"T": Time.get_unix_time_from_system(),"P": self.global_position, "A": animations.current_animation, "D": [traits.currentDirection, traits.flip, traits.traits]}
-	Server.broadcast("receivePlayerState",playerState)
+	var t = Time.get_unix_time_from_system()
+	
+	if playerState:
+		# Only send a state update if a second has passed since last update
+		if playerState["T"] + 0.1 > t:
+			return
+
+		# Only send update if change detected or 10s has passed since last update
+		if playerState["T"] + 10.0 > t and playerState["P"] == self.global_position and playerState["A"] == animations.current_animation:
+			return
+
+	playerState = {
+		"T": t,
+		"P": self.global_position,
+		"A": animations.current_animation,
+		"D": [traits.currentDirection, traits.flip, traits.traits],
+	}
+	Server.broadcast("receivePlayerState", playerState)

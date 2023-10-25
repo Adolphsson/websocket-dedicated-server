@@ -4,9 +4,10 @@ extends Node2D
 
 var lastWorldState = 0
 
+
 func spawn_player(playerID, spawnPosition):
 	if Database.username == playerID:
-		EffectController.play_fx(spawnPosition,$Player)
+		EffectController.play_fx(spawnPosition, $Player)
 		pass
 	else:
 		spawnPosition = GlobalFunctions.string_to_vector2(spawnPosition)
@@ -14,13 +15,15 @@ func spawn_player(playerID, spawnPosition):
 		newPlayer.global_position = spawnPosition
 		newPlayer.name = str(playerID)
 		peers.add_child(newPlayer)
-		EffectController.play_fx(spawnPosition,newPlayer)
+		EffectController.play_fx(spawnPosition, newPlayer)
+
 
 func despawn_player(player_id):
 	var path = peers.get_path()
 	var peer = str(path) + str("/", player_id)
 	var peer_node = get_node(peer)
 	peer_node.queue_free()
+
 
 func update_world_state(worldState):
 	#Buffer
@@ -36,7 +39,7 @@ func update_world_state(worldState):
 				if player != "undefined":
 					var path = peers.get_path()
 					var peer = get_node(str(path) + str("/" + str(player)))
-					peer.update_state(worldState[player]["P"],worldState[player]["A"],worldState[player]["D"])
+					peer.update_state(worldState[player]["P"], worldState[player]["A"], worldState[player]["D"])
 	#				else:
 	#					despawn_player(player)
 			else:

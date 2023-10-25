@@ -3,8 +3,10 @@ extends PlayerBaseState
 @export var walkPath:NodePath
 @onready var walkState = get_node(walkPath)
 
+
 func enter() -> void:
 	super.enter()
+
 
 func input(_event: InputEvent) -> PlayerBaseState:
 	var inputDir = Vector2(
@@ -14,6 +16,7 @@ func input(_event: InputEvent) -> PlayerBaseState:
 	if inputDir != Vector2.ZERO:
 		return walkState
 	return null
+
 
 func physics_process(_delta: float) -> PlayerBaseState:
 	return null

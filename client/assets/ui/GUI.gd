@@ -14,42 +14,52 @@ var current_input_mode = INPUT_KEYBOARD
 
 var screens
 var player
+
+
 func _ready() -> void:
 	player = get_node("/root/World/Player")
 	screens = fetch_screens()
 	for child in screens:
 		screens[child].hide()
 	states.init(self)
-	GlobalSignals.connect("CHANGE_SCREEN",change_state)
+	GlobalSignals.connect("CHANGE_SCREEN", change_state)
 	GlobalSignals.connect("SEND_NOTIFICATION", call_notification)
-	GlobalSignals.connect("CHANGE_BUTTON_STATE",change_button_state)
+	GlobalSignals.connect("CHANGE_BUTTON_STATE", change_button_state)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	states.input(event)
 
+
 func _physics_process(delta: float) -> void:
 	states.physics_process(delta)
+
 
 func _process(delta: float) -> void:
 	states.process(delta)
 
+
 func fetch_screens() -> Dictionary:
-	var screens = {}
+	var screensResult = {}
 	for child in $Screens.get_children():
-		screens[child.name] = child
-	return screens
+		screensResult[child.name] = child
+	return screensResult
+
 
 func change_state(newState):
 	states.change_state(states.get_node(newState))
+
 
 func call_notification(text):
 	gameNotifications.text = text
 	notificationAnim.play("show_notification")
 	notificationTimer.start(3)
 
+
 func _on_timer_timeout():
 	notificationAnim.play("hide_notification")
 	gameNotifications.text = ""
+
 
 func change_button_state(value):
 	$Screens/Menu/Panel/UserInput.editable = !value
@@ -64,6 +74,7 @@ func change_button_state(value):
 	$Screens/Verify/Panel/VerifyButton.disabled = value 
 	$Screens/Verify/Panel/CancelButton.disabled = value 
 	$Screens/Verify/Panel/CodeInput.editable = !value
+
 
 func _input(event):
 	if(event is InputEventKey):

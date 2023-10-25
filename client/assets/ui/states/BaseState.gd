@@ -12,21 +12,26 @@ var screenNode
 func _ready():
 	screenNode = get_node(screenPath)
 
+
 func enter() -> void:
 	screenNode.show()
 	if (enter_animation):
 		gui.animations.play(enter_animation)
+
 
 func exit() -> void:
 	screenNode.hide()
 	if (exit_animation):
 		gui.animations.play(exit_animation)
 
+
 func input(_event: InputEvent) -> BaseState:
 	return null
 
+
 func process(_delta: float) -> BaseState:
 	return null
+
 
 func physics_process(_delta: float) -> BaseState:
 	return null

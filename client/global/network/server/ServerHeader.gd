@@ -3,8 +3,8 @@ extends Node
 
 @onready var world = get_node("/root/World")
 
-var _ws := WebSocketPeer.new()
-var _server_url: String = "wss://game.adolphsson.se:444"
-var connected = false
-var reconnecting = false
+var ws := WebSocketPeer.new()
+var server_url := "wss://game.adolphsson.se:444"
+var connected := false
+var reconnecting := false
 var uuid = null

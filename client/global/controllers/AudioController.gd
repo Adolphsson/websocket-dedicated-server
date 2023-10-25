@@ -9,10 +9,12 @@ var audioLibrary = {
 	"pop": ["res://sound/sfx/pop (1).wav"],
 }
 
+
 func _ready():
 	randomize()
 
-func play_audio(sfx,pos,index = null):
+
+func play_audio(sfx, pos, index = null):
 	var newAudioPlayer = audioPlayer.instantiate()
 	if index:
 		newAudioPlayer.stream = load(audioLibrary[sfx][index])

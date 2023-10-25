@@ -4,14 +4,17 @@ extends Area2D
 var tilemap
 var standingTile = "footstep_grass"
 
+
 func _physics_process(_delta):
 	if player.velocity > Vector2.ZERO:
 		if tilemap:
 			define_standing_tile(player.global_position)
 
+
 func _on_body_entered(body):
 	if body is TileMap:
 		tilemap = body
+
 
 func define_standing_tile(pos):
 	var localMapPos = tilemap.local_to_map(pos)

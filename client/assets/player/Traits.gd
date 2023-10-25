@@ -24,22 +24,25 @@ var traits = {
 	"bottoms":$bottoms,
 }
 
+
 func _ready():
 	randomize()
 	pick_random_trait()
 	update_traits()
+
 
 func _process(_delta):
 	if oldDirection != currentDirection:
 		update_traits()
 		oldDirection = currentDirection
 
+
 func pick_random_trait():
 	for layer in traits:
 		if layer == "body":
 			continue
-		traits[layer] = randi_range(1,5)
-	var bodyType = randi_range(1,3)
+		traits[layer] = randi_range(1, 5)
+	var bodyType = randi_range(1, 3)
 	match bodyType:
 		1:
 			bodyType = "regular"
@@ -49,21 +52,23 @@ func pick_random_trait():
 			bodyType = "tall"
 	traits["body"] = bodyType
 
+
 func update_traits():
 	var texture
 	for layer in traits:
 		if layer == "body":
 			continue
 		var path
-		if ResourceLoader.exists("res://sprites/character/traits/%s/%s/%s/%s.png" %[traits["body"],currentDirection,layer,str(traits[layer])]):
-			path = "res://sprites/character/traits/%s/%s/%s/%s.png" %[traits["body"],currentDirection,layer,str(traits[layer])]
+		if ResourceLoader.exists("res://sprites/character/traits/%s/%s/%s/%s.png" % [traits["body"], currentDirection, layer, str(traits[layer])]):
+			path = "res://sprites/character/traits/%s/%s/%s/%s.png" % [traits["body"], currentDirection, layer, str(traits[layer])]
 		else:
 			traitsNodes[layer].texture = null
 			continue
 		texture = load(path)
 		traitsNodes[layer].texture = texture
-	texture = load("res://sprites/character/body/%s/%s.png" %[traits["body"],currentDirection])
+	texture = load("res://sprites/character/body/%s/%s.png" % [traits["body"], currentDirection])
 	traitsNodes["body"].texture = texture
+
 
 func verify_direction():
 	var angle = rad_to_deg(get_parent().angleMovement.rotation)
@@ -83,6 +88,7 @@ func verify_direction():
 		currentDirection = "upleft"
 	else:
 		currentDirection = "left"
+
 
 func flip_sprite(_flip: bool):
 	for layer in traitsNodes:
