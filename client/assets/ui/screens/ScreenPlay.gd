@@ -2,7 +2,7 @@ extends Control
 @onready var textInput = $TextInput
 @onready var animations = $Animation
 @onready var tip = $Tip
-
+@onready var screenControls = $ScreenControls
 
 
 func _ready():
@@ -26,4 +26,5 @@ func _on_text_input_text_submitted(new_text):
 
 
 func change_input_type(value):
-	$ScreenControls.visible = (value == 2)
+	screenControls.visible = (value == 2)
+	tip.visible = (value == 0)

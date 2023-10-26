@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://c5xo2p1r7tn85"]
+[gd_scene load_steps=29 format=3 uid="uid://c5xo2p1r7tn85"]
 
 [ext_resource type="Script" path="res://assets/ui/GUI.gd" id="1_0rf7o"]
 [ext_resource type="Script" path="res://assets/ui/states/StateManager.gd" id="1_054fu"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://assets/ui/screens/ScreenVerify.gd" id="8_pkru0"]
 [ext_resource type="Texture2D" uid="uid://cvas4ilp0d1q3" path="res://sprites/ui/up-button.png" id="8_sfjfa"]
 [ext_resource type="Texture2D" uid="uid://7vrokuef0auw" path="res://sprites/ui/up-button-pressed.png" id="9_uqbsb"]
+[ext_resource type="Texture2D" uid="uid://cjk1ms1a3h6ps" path="res://sprites/ui/chat.png" id="10_q41dt"]
 [ext_resource type="Script" path="res://assets/ui/states/StateVerify.gd" id="16_62mn6"]
 
 [sub_resource type="Animation" id="Animation_4rh0h"]
@@ -462,10 +463,10 @@ libraries = {
 layout_mode = 1
 anchor_right = 0.002
 anchor_bottom = 0.003
-offset_left = 2.0
-offset_top = 231.0
-offset_right = 126.72
-offset_bottom = 356.92
+offset_left = 18.0
+offset_top = 212.0
+offset_right = 618.72
+offset_bottom = 337.92
 
 [node name="ForwardButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
 position = Vector2(35, 2)
@@ -493,6 +494,12 @@ rotation = 3.14159
 texture_normal = ExtResource("8_sfjfa")
 texture_pressed = ExtResource("9_uqbsb")
 action = "move_backward"
+
+[node name="ChatButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
+position = Vector2(535, 62)
+scale = Vector2(1.1875, 1.1875)
+texture_normal = ExtResource("10_q41dt")
+action = "chat"
 
 [node name="Verify" type="Control" parent="Screens"]
 visible = false
