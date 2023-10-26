@@ -7,10 +7,7 @@ extends Control
 @onready var notificationAnim = $NotificationAnim
 @onready var notificationTimer = $NotificationTimer
 
-var INPUT_KEYBOARD = 0
-var INPUT_CONTROLLER = 1
-var INPUT_TOUCH = 2
-var current_input_mode = INPUT_KEYBOARD
+var current_input_mode = GlobalSignals.INPUT_TYPE_KEYBOARD
 
 var screens
 var player
@@ -79,18 +76,12 @@ func change_button_state(value):
 func _input(event):
 	var new_input_mode = current_input_mode
 	if(event is InputEventKey):
-		new_input_mode = INPUT_KEYBOARD
+		new_input_mode = GlobalSignals.INPUT_TYPE_KEYBOARD
 	elif(event is InputEventJoypadButton):
-		new_input_mode = INPUT_CONTROLLER
-	#elif(event is InputEventMouseButton):
-	#	new_input_mode = INPUT_KEYBOARD
+		new_input_mode = GlobalSignals.INPUT_TYPE_CONTROLLER
 	elif(event is InputEventScreenTouch):
-		new_input_mode = INPUT_TOUCH
-	#else:
-	#	# Do stuff
-	#	print('??')
+		new_input_mode = GlobalSignals.INPUT_TYPE_TOUCH
 	
 	if current_input_mode != new_input_mode:
 		current_input_mode = new_input_mode
 		GlobalSignals.emit_signal("CHANGE_INPUT_TYPE", new_input_mode)
-		print(current_input_mode)

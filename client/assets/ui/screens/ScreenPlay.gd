@@ -26,5 +26,5 @@ func _on_text_input_text_submitted(new_text):
 
 
 func change_input_type(value):
-	screenControls.visible = (value == 2)
-	tip.visible = (value == 0)
+	screenControls.visible = (value == GlobalSignals.INPUT_TYPE_TOUCH)
+	tip.visible = (value == GlobalSignals.INPUT_TYPE_KEYBOARD)

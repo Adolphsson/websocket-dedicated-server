@@ -460,6 +460,7 @@ libraries = {
 }
 
 [node name="ScreenControls" type="Control" parent="Screens/Play"]
+visible = false
 layout_mode = 1
 anchor_right = 0.002
 anchor_bottom = 0.003
@@ -496,6 +497,7 @@ texture_pressed = ExtResource("9_uqbsb")
 action = "move_backward"
 
 [node name="ChatButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
+visible = false
 position = Vector2(535, 62)
 scale = Vector2(1.1875, 1.1875)
 texture_normal = ExtResource("10_q41dt")
