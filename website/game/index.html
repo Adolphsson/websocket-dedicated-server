@@ -108,6 +108,21 @@ body {
 	padding: 4px 6px;
 	visibility: visible;
 }
+
+.button-fullscreen {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 48px;
+	height: 48px;
+	border: none;
+	background-image: url("fullscreen_on.png");
+	background-repeat: no-repeat;
+}
+
+.button-fullscreen:hover, .button-fullscreen:active {
+	opacity: 1;
+}
 		</style>
 		<link id='-gd-engine-icon' rel='icon' type='image/png' href='index.icon.png' />
 <link rel='apple-touch-icon' href='index.apple-touch-icon.png'/>
@@ -119,6 +134,7 @@ body {
 			HTML5 canvas appears to be unsupported in the current browser.<br >
 			Please try updating or use a different browser.
 		</canvas>
+		<button class="button-fullscreen"></button>
 		<div id="status">
 			<div id="status-progress" style="display: none;" oncontextmenu="event.preventDefault();">
 				<div id ="status-progress-inner"></div>
