@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c5xo2p1r7tn85"]
+[gd_scene load_steps=28 format=3 uid="uid://c5xo2p1r7tn85"]
 
 [ext_resource type="Script" path="res://assets/ui/GUI.gd" id="1_0rf7o"]
 [ext_resource type="Script" path="res://assets/ui/states/StateManager.gd" id="1_054fu"]
@@ -15,6 +15,8 @@
 [ext_resource type="Script" path="res://assets/ui/screens/ScreenPlay.gd" id="6_t4syb"]
 [ext_resource type="Script" path="res://assets/ui/states/StatePlay.gd" id="6_unm0c"]
 [ext_resource type="Script" path="res://assets/ui/screens/ScreenVerify.gd" id="8_pkru0"]
+[ext_resource type="Texture2D" uid="uid://cvas4ilp0d1q3" path="res://sprites/ui/up-button.png" id="8_sfjfa"]
+[ext_resource type="Texture2D" uid="uid://7vrokuef0auw" path="res://sprites/ui/up-button-pressed.png" id="9_uqbsb"]
 [ext_resource type="Script" path="res://assets/ui/states/StateVerify.gd" id="16_62mn6"]
 
 [sub_resource type="Animation" id="Animation_4rh0h"]
@@ -422,10 +424,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 159.0
-offset_top = 369.0
-offset_right = 481.0
-offset_bottom = 400.0
+offset_left = -161.0
+offset_top = 9.0
+offset_right = 161.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("4_ftw3x")
@@ -455,6 +457,42 @@ vertical_alignment = 1
 libraries = {
 "": SubResource("AnimationLibrary_t2sxm")
 }
+
+[node name="ScreenControls" type="Control" parent="Screens/Play"]
+layout_mode = 1
+anchor_right = 0.002
+anchor_bottom = 0.003
+offset_left = 2.0
+offset_top = 231.0
+offset_right = 126.72
+offset_bottom = 356.92
+
+[node name="ForwardButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
+position = Vector2(35, 2)
+texture_normal = ExtResource("8_sfjfa")
+texture_pressed = ExtResource("9_uqbsb")
+action = "move_forward"
+
+[node name="LeftButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
+position = Vector2(1, 90)
+rotation = -1.5708
+texture_normal = ExtResource("8_sfjfa")
+texture_pressed = ExtResource("9_uqbsb")
+action = "move_left"
+
+[node name="RightButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
+position = Vector2(123, 36)
+rotation = 1.5708
+texture_normal = ExtResource("8_sfjfa")
+texture_pressed = ExtResource("9_uqbsb")
+action = "move_right"
+
+[node name="BackwardButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
+position = Vector2(89, 124)
+rotation = 3.14159
+texture_normal = ExtResource("8_sfjfa")
+texture_pressed = ExtResource("9_uqbsb")
+action = "move_backward"
 
 [node name="Verify" type="Control" parent="Screens"]
 visible = false
@@ -535,9 +573,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 475.5
+offset_left = 155.5
 offset_top = -32.0
-offset_right = 672.5
+offset_right = 352.5
 offset_bottom = -9.0
 grow_horizontal = 2
 theme = ExtResource("4_ftw3x")

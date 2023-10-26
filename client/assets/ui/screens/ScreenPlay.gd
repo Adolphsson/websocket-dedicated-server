@@ -4,6 +4,11 @@ extends Control
 @onready var tip = $Tip
 
 
+
+func _ready():
+	GlobalSignals.connect("CHANGE_INPUT_TYPE", change_input_type)
+
+
 func _on_text_input_text_submitted(new_text):
 	if new_text != "":
 		Server.send_text(new_text, $"../..".player.global_position)
@@ -19,3 +24,6 @@ func _on_text_input_text_submitted(new_text):
 		animations.play("hide_chat")
 		tip.show()
 
+
+func change_input_type(value):
+	$ScreenControls.visible = (value == 2)

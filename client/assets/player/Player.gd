@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var traits = $Traits
 @onready var angleMovement = $AngleMovement
 @onready var terrainDetector = $TerrainDetector
+@onready var nameLabel = $Name
 var controlling = true
 var playerState = {}
 
@@ -38,6 +39,7 @@ func load_player_state(state):
 			traits.currentDirection = state["D"][0]
 			traits.flip_sprite(state["D"][1])
 	$Tooltip.tooltip_text = Database.username
+	nameLabel.text = Database.username
 
 
 func _unhandled_input(event: InputEvent) -> void:

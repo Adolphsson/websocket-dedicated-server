@@ -6,6 +6,7 @@ signal SEND_NOTIFICATION(text)
 signal CHANGE_PLAYER_STATE(value)
 signal CHANGE_PLAYER_CONTROL_STATE(value)
 signal CHANGE_BUTTON_STATE(value)
+signal CHANGE_INPUT_TYPE(value)
 #client-signals
 signal SEND_TEXT(text)
 

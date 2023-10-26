@@ -16,3 +16,5 @@ func update_state(pos, animation, dir):
 	traits.flip_sprite(dir[1])
 	traits.traits = dir[2]
 
+func _ready():
+	$Name.text = self.name

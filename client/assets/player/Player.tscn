@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://r7m68rsqb0up"]
+[gd_scene load_steps=27 format=3 uid="uid://r7m68rsqb0up"]
 
 [ext_resource type="Script" path="res://assets/player/states/StateIdle.gd" id="1_6akhk"]
 [ext_resource type="Script" path="res://assets/player/Player.gd" id="1_wtsgd"]
@@ -17,6 +17,11 @@
 [ext_resource type="Texture2D" uid="uid://4swuwrcp5bl7" path="res://sprites/character/traits/fat/down/bottoms/1.png" id="12_6skwg"]
 [ext_resource type="Script" path="res://assets/player/TerrainDetector.gd" id="16_2h1lw"]
 [ext_resource type="PackedScene" uid="uid://d0vael6aud428" path="res://assets/Tooltip.tscn" id="17_24c78"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nkuuy"]
+font_size = 8
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7j81t"]
 size = Vector2(11, 6)
@@ -395,6 +400,14 @@ size = Vector2(11, 6)
 texture_filter = 1
 input_pickable = true
 script = ExtResource("1_wtsgd")
+
+[node name="Name" type="Label" parent="."]
+offset_left = -36.0
+offset_top = -45.0
+offset_right = 36.0
+offset_bottom = -30.0
+label_settings = SubResource("LabelSettings_nkuuy")
+horizontal_alignment = 1
 
 [node name="SpeechBoxLabel" type="Label" parent="."]
 visible = false

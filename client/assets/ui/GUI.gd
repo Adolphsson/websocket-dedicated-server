@@ -77,14 +77,20 @@ func change_button_state(value):
 
 
 func _input(event):
+	var new_input_mode = current_input_mode
 	if(event is InputEventKey):
-		current_input_mode = INPUT_KEYBOARD
+		new_input_mode = INPUT_KEYBOARD
 	elif(event is InputEventJoypadButton):
-		current_input_mode = INPUT_CONTROLLER
-	elif(event is InputEventMouseButton):
-		current_input_mode = INPUT_KEYBOARD
+		new_input_mode = INPUT_CONTROLLER
+	#elif(event is InputEventMouseButton):
+	#	new_input_mode = INPUT_KEYBOARD
 	elif(event is InputEventScreenTouch):
-		current_input_mode = INPUT_TOUCH
+		new_input_mode = INPUT_TOUCH
 	#else:
 	#	# Do stuff
 	#	print('??')
+	
+	if current_input_mode != new_input_mode:
+		current_input_mode = new_input_mode
+		GlobalSignals.emit_signal("CHANGE_INPUT_TYPE", new_input_mode)
+		print(current_input_mode)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cftglfuliop4n"]
+[gd_scene load_steps=22 format=3 uid="uid://cftglfuliop4n"]
 
 [ext_resource type="Script" path="res://assets/peer/Peer.gd" id="1_yxklb"]
 [ext_resource type="Theme" uid="uid://dictf83vmdo2" path="res://assets/ui/themes/speech-bubble-theme.tres" id="2_opnxr"]
@@ -13,6 +13,11 @@
 [ext_resource type="Texture2D" uid="uid://bqj24ft8qb02b" path="res://sprites/character/traits/fat/down/top/1.png" id="11_vidca"]
 [ext_resource type="Texture2D" uid="uid://4swuwrcp5bl7" path="res://sprites/character/traits/fat/down/bottoms/1.png" id="12_un61p"]
 [ext_resource type="PackedScene" uid="uid://d0vael6aud428" path="res://assets/Tooltip.tscn" id="13_40ugn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cgqas"]
+font_size = 8
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ewdcp"]
 radius = 5.09902
@@ -389,6 +394,14 @@ texture_filter = 1
 collision_layer = 4
 input_pickable = true
 script = ExtResource("1_yxklb")
+
+[node name="Name" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -42.0
+offset_right = 20.0
+offset_bottom = -30.0
+label_settings = SubResource("LabelSettings_cgqas")
+horizontal_alignment = 1
 
 [node name="SpeechBoxLabel" type="Label" parent="."]
 visible = false
