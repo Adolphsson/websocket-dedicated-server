@@ -433,10 +433,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -161.0
-offset_top = 9.0
-offset_right = 161.0
-offset_bottom = 40.0
+offset_left = 159.0
+offset_top = 369.0
+offset_right = 481.0
+offset_bottom = 400.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("4_ftw3x")
@@ -470,35 +470,36 @@ libraries = {
 [node name="ScreenControls" type="Control" parent="Screens/Play"]
 visible = false
 layout_mode = 1
-anchor_right = 0.002
-anchor_bottom = 0.003
-offset_left = 18.0
-offset_top = 212.0
-offset_right = 618.72
-offset_bottom = 337.92
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -144.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="ForwardButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
-position = Vector2(35, 2)
+position = Vector2(56.0002, 3)
 texture_normal = ExtResource("8_sfjfa")
 texture_pressed = ExtResource("9_uqbsb")
 action = "move_forward"
 
 [node name="LeftButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
-position = Vector2(1, 90)
+position = Vector2(22.0002, 91)
 rotation = -1.5708
 texture_normal = ExtResource("8_sfjfa")
 texture_pressed = ExtResource("9_uqbsb")
 action = "move_left"
 
 [node name="RightButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
-position = Vector2(123, 36)
+position = Vector2(144, 37)
 rotation = 1.5708
 texture_normal = ExtResource("8_sfjfa")
 texture_pressed = ExtResource("9_uqbsb")
 action = "move_right"
 
 [node name="BackwardButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
-position = Vector2(89, 124)
+position = Vector2(110, 125)
 rotation = 3.14159
 texture_normal = ExtResource("8_sfjfa")
 texture_pressed = ExtResource("9_uqbsb")
@@ -590,9 +591,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 155.5
+offset_left = 475.5
 offset_top = -32.0
-offset_right = 352.5
+offset_right = 672.5
 offset_bottom = -9.0
 grow_horizontal = 2
 theme = ExtResource("4_ftw3x")
@@ -631,11 +632,15 @@ screenPath = NodePath("../../Screens/Verify")
 [node name="Animations" type="AnimationPlayer" parent="."]
 
 [node name="FullScreenButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 593.0
-offset_top = 7.0
-offset_right = 633.0
-offset_bottom = 47.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 50.0
+grow_horizontal = 0
 tooltip_text = "Toggle the app full-screen.
 Shortcut: F11"
 shortcut = SubResource("Shortcut_dqw6d")
