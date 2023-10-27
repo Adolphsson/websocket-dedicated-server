@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://c5xo2p1r7tn85"]
+[gd_scene load_steps=33 format=3 uid="uid://c5xo2p1r7tn85"]
 
 [ext_resource type="Script" path="res://assets/ui/GUI.gd" id="1_0rf7o"]
 [ext_resource type="Script" path="res://assets/ui/states/StateManager.gd" id="1_054fu"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://7vrokuef0auw" path="res://sprites/ui/up-button-pressed.png" id="9_uqbsb"]
 [ext_resource type="Texture2D" uid="uid://cjk1ms1a3h6ps" path="res://sprites/ui/chat.png" id="10_q41dt"]
 [ext_resource type="Script" path="res://assets/ui/states/StateVerify.gd" id="16_62mn6"]
+[ext_resource type="Texture2D" uid="uid://csn7b20hlhp8f" path="res://sprites/ui/fullscreen-on.png" id="20_ncduf"]
 [ext_resource type="Script" path="res://assets/ui/FullScreenButton.gd" id="20_t0vra"]
 
 [sub_resource type="Animation" id="Animation_4rh0h"]
@@ -135,6 +136,12 @@ texture_margin_left = 4.0
 texture_margin_top = 4.0
 texture_margin_right = 4.0
 texture_margin_bottom = 4.0
+
+[sub_resource type="InputEventKey" id="InputEventKey_ydmno"]
+keycode = 4194342
+
+[sub_resource type="Shortcut" id="Shortcut_dqw6d"]
+events = [SubResource("InputEventKey_ydmno")]
 
 [node name="GUI" type="Control"]
 texture_filter = 1
@@ -426,10 +433,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 159.0
-offset_top = 369.0
-offset_right = 481.0
-offset_bottom = 400.0
+offset_left = -161.0
+offset_top = 9.0
+offset_right = 161.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("4_ftw3x")
@@ -583,9 +590,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 475.5
+offset_left = 155.5
 offset_top = -32.0
-offset_right = 672.5
+offset_right = 352.5
 offset_bottom = -9.0
 grow_horizontal = 2
 theme = ExtResource("4_ftw3x")
@@ -625,13 +632,16 @@ screenPath = NodePath("../../Screens/Verify")
 
 [node name="FullScreenButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 545.0
-offset_top = 9.0
-offset_right = 632.0
-offset_bottom = 40.0
+offset_left = 593.0
+offset_top = 7.0
+offset_right = 633.0
+offset_bottom = 47.0
 tooltip_text = "Toggle the app full-screen.
 Shortcut: F11"
-text = "Fullscreen"
+shortcut = SubResource("Shortcut_dqw6d")
+icon = ExtResource("20_ncduf")
+flat = true
+icon_alignment = 1
 script = ExtResource("20_t0vra")
 
 [connection signal="timeout" from="NotificationTimer" to="." method="_on_timer_timeout"]
