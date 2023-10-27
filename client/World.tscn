@@ -36,3 +36,38 @@ texture = ExtResource("5_cva8y")
 z_index = -2
 position = Vector2(576, 216)
 texture = ExtResource("5_cva8y")
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -2
+position = Vector2(64, 728)
+texture = ExtResource("5_cva8y")
+
+[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -2
+position = Vector2(576, 728)
+texture = ExtResource("5_cva8y")
+
+[node name="Sprite2D5" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -2
+position = Vector2(1088, 216)
+texture = ExtResource("5_cva8y")
+
+[node name="Sprite2D6" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -2
+position = Vector2(1088, 728)
+texture = ExtResource("5_cva8y")
+
+[node name="Sprite2D7" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -2
+position = Vector2(64, 1240)
+texture = ExtResource("5_cva8y")
+
+[node name="Sprite2D8" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -2
+position = Vector2(576, 1240)
+texture = ExtResource("5_cva8y")
+
+[node name="Sprite2D9" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -2
+position = Vector2(1088, 1240)
+texture = ExtResource("5_cva8y")
