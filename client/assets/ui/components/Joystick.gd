@@ -21,9 +21,9 @@ func _input(event):
 		if not touched:
 			if distance < max_distance:
 				touched = true
-			else:
-				small_circle.position = Vector2(0, 0)
-				touched = false
+		else:
+			small_circle.position = Vector2(0, 0)
+			touched = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
