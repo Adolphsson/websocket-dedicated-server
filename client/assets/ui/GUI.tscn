@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c5xo2p1r7tn85"]
+[gd_scene load_steps=34 format=3 uid="uid://c5xo2p1r7tn85"]
 
 [ext_resource type="Script" path="res://assets/ui/GUI.gd" id="1_0rf7o"]
 [ext_resource type="Script" path="res://assets/ui/states/StateManager.gd" id="1_054fu"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://cvas4ilp0d1q3" path="res://sprites/ui/up-button.png" id="8_sfjfa"]
 [ext_resource type="Texture2D" uid="uid://7vrokuef0auw" path="res://sprites/ui/up-button-pressed.png" id="9_uqbsb"]
 [ext_resource type="Texture2D" uid="uid://cjk1ms1a3h6ps" path="res://sprites/ui/chat.png" id="10_q41dt"]
+[ext_resource type="PackedScene" uid="uid://cgjdjhiwftt6h" path="res://assets/ui/components/Joystick.tscn" id="11_dqu1v"]
 [ext_resource type="Script" path="res://assets/ui/states/StateVerify.gd" id="16_62mn6"]
 [ext_resource type="Texture2D" uid="uid://csn7b20hlhp8f" path="res://sprites/ui/fullscreen-on.png" id="20_ncduf"]
 [ext_resource type="Script" path="res://assets/ui/FullScreenButton.gd" id="20_t0vra"]
@@ -433,10 +434,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -161.0
-offset_top = 9.0
-offset_right = 161.0
-offset_bottom = 40.0
+offset_left = 159.0
+offset_top = 369.0
+offset_right = 481.0
+offset_bottom = 400.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("4_ftw3x")
@@ -468,7 +469,6 @@ libraries = {
 }
 
 [node name="ScreenControls" type="Control" parent="Screens/Play"]
-visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -511,6 +511,9 @@ position = Vector2(535, 62)
 scale = Vector2(1.1875, 1.1875)
 texture_normal = ExtResource("10_q41dt")
 action = "chat"
+
+[node name="Joystick" parent="Screens/Play/ScreenControls" instance=ExtResource("11_dqu1v")]
+position = Vector2(201, 63)
 
 [node name="Verify" type="Control" parent="Screens"]
 visible = false
@@ -591,9 +594,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 155.5
+offset_left = 475.5
 offset_top = -32.0
-offset_right = 352.5
+offset_right = 672.5
 offset_bottom = -9.0
 grow_horizontal = 2
 theme = ExtResource("4_ftw3x")
