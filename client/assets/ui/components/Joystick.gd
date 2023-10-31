@@ -38,61 +38,28 @@ func _process(delta):
 		#clamp the small circle
 		knob.position = big_circle.position + (knob.position - big_circle.position).limit_length(max_distance)
 		var normal_velocity = knob.position / max_distance
-		if normal_velocity.x < dead_zone:
-			#if action_right:
-			#	action_right = false
-			#	Input.action_release(right_action)
-			#Input.action_press(left_action, -normal_velocity.x)
-			#action_left = true
-			
+		#print(str(normal_velocity.x) + " " + str(normal_velocity.y))
+		if normal_velocity.x < -dead_zone:
 			if action_right:
 				action_right = false
-				var right_event = InputEventAction.new()
-				right_event.action = right_action
-				right_event.pressed = false
-				Input.parse_input_event(right_event)
-			if not action_left:
-				action_left = true
-				var left_event = InputEventAction.new()
-				left_event.action = left_action
-				left_event.pressed = true
-				Input.parse_input_event(left_event)
+				Input.action_release(right_action)
+			Input.action_press(left_action, -normal_velocity.x)
+			action_left = true
 		elif normal_velocity.x > dead_zone:
-			#if action_left:
-			#	action_left = false
-			#	Input.action_release(left_action)
-			#Input.action_press(right_action, normal_velocity.x)
-			#action_right = true
-			
 			if action_left:
 				action_left = false
-				var left_event = InputEventAction.new()
-				left_event.action = left_action
-				left_event.pressed = false
-				Input.parse_input_event(left_event)
-			if not action_right:
-				action_right = true
-				var right_event = InputEventAction.new()
-				right_event.action = right_action
-				right_event.pressed = true
-				Input.parse_input_event(right_event)
+				Input.action_release(left_action)
+			Input.action_press(right_action, normal_velocity.x)
+			action_right = true
 		else:
 			if action_left:
-				#action_left = false
-				#Input.action_release(left_action)
-				var left_event = InputEventAction.new()
-				left_event.action = left_action
-				left_event.pressed = false
-				Input.parse_input_event(left_event)
+				action_left = false
+				Input.action_release(left_action)
 			if action_right:
-				#action_right = false
-				#Input.action_release(right_action)
-				var right_event = InputEventAction.new()
-				right_event.action = left_action
-				right_event.pressed = false
-				Input.parse_input_event(right_event)
+				action_right = false
+				Input.action_release(right_action)
 
-		if normal_velocity.y < dead_zone:
+		if normal_velocity.y < -dead_zone:
 			if action_down:
 				action_down = false
 				Input.action_release(down_action)
