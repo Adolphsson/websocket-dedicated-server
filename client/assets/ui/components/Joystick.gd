@@ -43,13 +43,13 @@ func _process(delta):
 			if action_right:
 				action_right = false
 				Input.action_release(right_action)
-			Input.action_press(left_action, -normal_velocity.x)
+			Input.action_press(left_action)
 			action_left = true
 		elif normal_velocity.x > dead_zone:
 			if action_left:
 				action_left = false
 				Input.action_release(left_action)
-			Input.action_press(right_action, normal_velocity.x)
+			Input.action_press(right_action)
 			action_right = true
 		else:
 			if action_left:
@@ -63,13 +63,13 @@ func _process(delta):
 			if action_down:
 				action_down = false
 				Input.action_release(down_action)
-			Input.action_press(up_action, -normal_velocity.y)
+			Input.action_press(up_action)
 			action_up = true
 		elif normal_velocity.y > dead_zone:
 			if action_up:
 				action_up = false
 				Input.action_release(up_action)
-			Input.action_press(down_action, normal_velocity.y)
+			Input.action_press(down_action)
 			action_down = true
 		else:
 			if action_up:
