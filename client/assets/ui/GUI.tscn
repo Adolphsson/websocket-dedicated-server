@@ -434,10 +434,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 159.0
-offset_top = 369.0
-offset_right = 481.0
-offset_bottom = 400.0
+offset_left = -161.0
+offset_top = 9.0
+offset_right = 161.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("4_ftw3x")
@@ -479,12 +479,14 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="ForwardButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
+visible = false
 position = Vector2(56.0002, 3)
 texture_normal = ExtResource("8_sfjfa")
 texture_pressed = ExtResource("9_uqbsb")
 action = "move_forward"
 
 [node name="LeftButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
+visible = false
 position = Vector2(22.0002, 91)
 rotation = -1.5708
 texture_normal = ExtResource("8_sfjfa")
@@ -492,6 +494,7 @@ texture_pressed = ExtResource("9_uqbsb")
 action = "move_left"
 
 [node name="RightButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
+visible = false
 position = Vector2(144, 37)
 rotation = 1.5708
 texture_normal = ExtResource("8_sfjfa")
@@ -499,6 +502,7 @@ texture_pressed = ExtResource("9_uqbsb")
 action = "move_right"
 
 [node name="BackwardButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
+visible = false
 position = Vector2(110, 125)
 rotation = 3.14159
 texture_normal = ExtResource("8_sfjfa")
@@ -513,7 +517,7 @@ texture_normal = ExtResource("10_q41dt")
 action = "chat"
 
 [node name="Joystick" parent="Screens/Play/ScreenControls" instance=ExtResource("11_dqu1v")]
-position = Vector2(201, 63)
+position = Vector2(71, 72)
 
 [node name="Verify" type="Control" parent="Screens"]
 visible = false
@@ -594,9 +598,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 475.5
+offset_left = 155.5
 offset_top = -32.0
-offset_right = 672.5
+offset_right = 352.5
 offset_bottom = -9.0
 grow_horizontal = 2
 theme = ExtResource("4_ftw3x")

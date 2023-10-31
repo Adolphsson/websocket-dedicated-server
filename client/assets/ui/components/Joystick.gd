@@ -1,9 +1,15 @@
 extends Area2D
 
 @onready var big_circle = $BigCircle
-@onready var small_circle = $BigCircle/SmallCircle
+@onready var knob = $BigCircle/Knob
 
 @onready var max_distance = $CollisionShape2D.shape.radius
+@onready var dead_zone = 0.25
+
+@onready var right_action = "move_right"
+@onready var left_action = "move_left"
+@onready var up_action = "move_forward"
+@onready var down_action = "move_backward"
 
 var touched = false
 var action_up = false
@@ -22,72 +28,71 @@ func _input(event):
 			if distance < max_distance:
 				touched = true
 		else:
-			small_circle.position = Vector2(0, 0)
 			touched = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(delta):
 	if touched:
-		small_circle.global_position = get_global_mouse_position()
+		knob.global_position = get_global_mouse_position()
 		#clamp the small circle
-		small_circle.position = big_circle.position + (small_circle.position - big_circle.position).limit_length(max_distance)
-		var normal_velocity = small_circle.position / max_distance
-		if normal_velocity.x < 0.5:
+		knob.position = big_circle.position + (knob.position - big_circle.position).limit_length(max_distance)
+		var normal_velocity = knob.position / max_distance
+		if normal_velocity.x < dead_zone:
 			if action_right:
-				Input.action_release("move_right")
 				action_right = false
-			Input.action_press("move_left", -normal_velocity.x)
+				Input.action_release(right_action)
+			Input.action_press(left_action, -normal_velocity.x)
 			action_left = true
-		elif normal_velocity.x > 0.5:
+		elif normal_velocity.x > dead_zone:
 			if action_left:
-				Input.action_release("move_left")
 				action_left = false
-			Input.action_press("move_right", normal_velocity.x)
+				Input.action_release(left_action)
+			Input.action_press(right_action, normal_velocity.x)
 			action_right = true
 		else:
 			if action_left:
 				action_left = false
-				Input.action_release("move_left")
+				Input.action_release(left_action)
 			if action_right:
 				action_right = false
-				Input.action_release("move_right")
-		if normal_velocity.y < 0.5:
+				Input.action_release(right_action)
+
+		if normal_velocity.y < dead_zone:
 			if action_down:
-				Input.action_release("move_backward")
 				action_down = false
-			Input.action_press("move_forward", -normal_velocity.y)
+				Input.action_release(down_action)
+			Input.action_press(up_action, -normal_velocity.y)
 			action_up = true
-		elif normal_velocity.y > 0.5:
+		elif normal_velocity.y > dead_zone:
 			if action_up:
-				Input.action_release("move_forward")
 				action_up = false
-			Input.action_press("move_backward", normal_velocity.y)
+				Input.action_release(up_action)
+			Input.action_press(down_action, normal_velocity.y)
 			action_down = true
 		else:
 			if action_up:
 				action_up = false
-				Input.action_release("move_forward")
+				Input.action_release(up_action)
 			if action_down:
 				action_down = false
-				Input.action_release("move_backward")
+				Input.action_release(down_action)
 	else:
 		if action_left:
 			action_left = false
-			Input.action_release("move_left")
+			Input.action_release(left_action)
 		if action_right:
 			action_right = false
-			Input.action_release("move_right")
+			Input.action_release(right_action)
 		if action_up:
 			action_up = false
-			Input.action_release("move_forward")
+			Input.action_release(up_action)
 		if action_down:
 			action_down = false
-			Input.action_release("move_backward")
+			Input.action_release(down_action)
+		if knob.position.x != 0.0 or knob.position.y != 0.0:
+			knob.position = lerp(knob.position, Vector2(0, 0), delta)
 
 
 func get_velocity():
-	var joystick_velocity = Vector2(0, 0)
-	joystick_velocity.x = small_circle.position.x / max_distance
-	joystick_velocity.y = small_circle.position.y / max_distance
-	return joystick_velocity
+	return knob.position / max_distance
