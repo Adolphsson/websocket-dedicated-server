@@ -6,19 +6,20 @@ extends Area2D
 @onready var max_distance = $CollisionShape2D.shape.radius
 @onready var dead_zone = 0.5
 
-@onready var right_action = "move_right"
 @onready var left_action = "move_left"
+@onready var right_action = "move_right"
 @onready var up_action = "move_forward"
 @onready var down_action = "move_backward"
 
 var touched = false
-var action_up = false
-var action_down = false
-var action_right = false
-var action_left = false
+var current_action = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	current_action[left_action] = false
+	current_action[right_action] = false
+	current_action[up_action] = false
+	current_action[down_action] = false
 	pass # Replace with function body.
 
 func _input(event):
@@ -31,6 +32,14 @@ func _input(event):
 			touched = false
 
 
+func _action(action, pressed):
+	if current_action[action] != pressed:
+		current_action[action] = pressed
+		var evt = InputEventAction.new()
+		evt.action = action
+		evt.pressed = pressed
+		Input.parse_input_event(evt)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if touched:
@@ -38,59 +47,30 @@ func _process(delta):
 		#clamp the small circle
 		knob.position = big_circle.position + (knob.position - big_circle.position).limit_length(max_distance)
 		var normal_velocity = knob.position / max_distance
-		#print(str(normal_velocity.x) + " " + str(normal_velocity.y))
 		if normal_velocity.x < -dead_zone:
-			if action_right:
-				action_right = false
-				Input.action_release(right_action)
-			Input.action_press(left_action)
-			action_left = true
+			_action(right_action, false)
+			_action(left_action, true)
 		elif normal_velocity.x > dead_zone:
-			if action_left:
-				action_left = false
-				Input.action_release(left_action)
-			Input.action_press(right_action)
-			action_right = true
+			_action(left_action, false)
+			_action(right_action, true)
 		else:
-			if action_left:
-				action_left = false
-				Input.action_release(left_action)
-			if action_right:
-				action_right = false
-				Input.action_release(right_action)
+			_action(left_action, false)
+			_action(right_action, false)
 
 		if normal_velocity.y < -dead_zone:
-			if action_down:
-				action_down = false
-				Input.action_release(down_action)
-			Input.action_press(up_action)
-			action_up = true
+			_action(down_action, false)
+			_action(up_action, true)
 		elif normal_velocity.y > dead_zone:
-			if action_up:
-				action_up = false
-				Input.action_release(up_action)
-			Input.action_press(down_action)
-			action_down = true
+			_action(up_action, false)
+			_action(down_action, true)
 		else:
-			if action_up:
-				action_up = false
-				Input.action_release(up_action)
-			if action_down:
-				action_down = false
-				Input.action_release(down_action)
+			_action(up_action, false)
+			_action(down_action, false)
 	else:
-		if action_left:
-			action_left = false
-			Input.action_release(left_action)
-		if action_right:
-			action_right = false
-			Input.action_release(right_action)
-		if action_up:
-			action_up = false
-			Input.action_release(up_action)
-		if action_down:
-			action_down = false
-			Input.action_release(down_action)
+		_action(left_action, false)
+		_action(right_action, false)
+		_action(up_action, false)
+		_action(down_action, false)
 		if knob.position.x != 0.0 or knob.position.y != 0.0:
 			knob.position = lerp(knob.position, Vector2(0, 0), delta * 25.0)
 
