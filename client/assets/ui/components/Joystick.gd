@@ -4,7 +4,7 @@ extends Area2D
 @onready var knob = $BigCircle/Knob
 
 @onready var max_distance = $CollisionShape2D.shape.radius
-@onready var dead_zone = 0.25
+@onready var dead_zone = 0.5
 
 @onready var right_action = "move_right"
 @onready var left_action = "move_left"
@@ -39,24 +39,58 @@ func _process(delta):
 		knob.position = big_circle.position + (knob.position - big_circle.position).limit_length(max_distance)
 		var normal_velocity = knob.position / max_distance
 		if normal_velocity.x < dead_zone:
+			#if action_right:
+			#	action_right = false
+			#	Input.action_release(right_action)
+			#Input.action_press(left_action, -normal_velocity.x)
+			#action_left = true
+			
 			if action_right:
 				action_right = false
-				Input.action_release(right_action)
-			Input.action_press(left_action, -normal_velocity.x)
-			action_left = true
+				var right_event = InputEventAction.new()
+				right_event.action = right_action
+				right_event.pressed = false
+				Input.parse_input_event(right_event)
+			if not action_left:
+				action_left = true
+				var left_event = InputEventAction.new()
+				left_event.action = left_action
+				left_event.pressed = true
+				Input.parse_input_event(left_event)
 		elif normal_velocity.x > dead_zone:
+			#if action_left:
+			#	action_left = false
+			#	Input.action_release(left_action)
+			#Input.action_press(right_action, normal_velocity.x)
+			#action_right = true
+			
 			if action_left:
 				action_left = false
-				Input.action_release(left_action)
-			Input.action_press(right_action, normal_velocity.x)
-			action_right = true
+				var left_event = InputEventAction.new()
+				left_event.action = left_action
+				left_event.pressed = false
+				Input.parse_input_event(left_event)
+			if not action_right:
+				action_right = true
+				var right_event = InputEventAction.new()
+				right_event.action = right_action
+				right_event.pressed = true
+				Input.parse_input_event(right_event)
 		else:
 			if action_left:
-				action_left = false
-				Input.action_release(left_action)
+				#action_left = false
+				#Input.action_release(left_action)
+				var left_event = InputEventAction.new()
+				left_event.action = left_action
+				left_event.pressed = false
+				Input.parse_input_event(left_event)
 			if action_right:
-				action_right = false
-				Input.action_release(right_action)
+				#action_right = false
+				#Input.action_release(right_action)
+				var right_event = InputEventAction.new()
+				right_event.action = left_action
+				right_event.pressed = false
+				Input.parse_input_event(right_event)
 
 		if normal_velocity.y < dead_zone:
 			if action_down:
@@ -91,7 +125,7 @@ func _process(delta):
 			action_down = false
 			Input.action_release(down_action)
 		if knob.position.x != 0.0 or knob.position.y != 0.0:
-			knob.position = lerp(knob.position, Vector2(0, 0), delta)
+			knob.position = lerp(knob.position, Vector2(0, 0), delta * 25.0)
 
 
 func get_velocity():
