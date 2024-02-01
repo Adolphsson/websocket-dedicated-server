@@ -1,4 +1,4 @@
-# Multiplayer Game Godot 4.1
+# Multiplayer Game Godot 4.2
 
 ## Table Of Contents
 - [About](#about)
@@ -13,7 +13,7 @@
 - [Contributing](#contributing)
 
 ## About
-A base for MMO games using Godot 4.1. It includes a database, websocket server, dockerfiles for easy and fast deployment, website for account confirmation and documentation. Although it runs in Godot 4.1, I'm almost 100% sure that it can run with other engines.
+A base for MMO games using Godot 4.2. It includes a database, websocket server, dockerfiles for easy and fast deployment, website for account confirmation and documentation. Although it runs in Godot 4.2, I'm almost 100% sure that it can run with other engines.
 
 To run this project you will need:
   - Node.js
@@ -75,7 +75,7 @@ node server
 ```
 
 ### Client
-**Description**: Godot 4.1 Project to connect with the database & server. [Live Preview](https://pixelrogueart.com/mmo-example)
+**Description**: Godot 4.2 Project to connect with the database & server. [Live Preview](https://pixelrogueart.com/mmo-example)
 
 **Usage**:
 - Run the project.godot inside the client folder. 
