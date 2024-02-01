@@ -1,7 +1,8 @@
 //You can add all the actions that clients can request here.
 const { loadPlayerData, loadMapData ,loadPlayerInventory } = require('./dataHandler');
 const { updatePlayerState } = require('./stateProcessing');
-const { uuidToUsername } = require('./dataHandler')
+const { getChatResponseAsync } = require('./npcProcessing');
+const { uuidToUsername } = require('./dataHandler');
 
 //Here the server will match the uuid with the username, load the player data and send it back so the client can restore.
 function readyPlayer(wss, ws, parsed) {
@@ -24,6 +25,14 @@ function receivePlayerState(wss, ws, parsed) {
 
 //This script you can use to send fast packages between players, without the need of running any backend function. All you need is create the action in the client.
 function broadcast(wss, ws, parsed){
+    if(parsed.data.function === 'receive_text') {
+        // A chat message is being sent, let's read it and send it to chatGPT for a response
+        getChatResponseAsync(parsed.data.parameters.username, parsed.data.parameters.text).then((msg) => {
+            wss.clients.forEach(client => {
+                client.send(JSON.stringify({action:'broadcast', data: {parameters: {username: 'Bengt', text: msg, position: '(5,5)', audioIndex: 1}, function: 'receive_text'}}));
+           });
+        });
+    }
     //TODO: This kind of broadcast can be very costly, try to make it location dependant and only send the update to players within viewing distance of each other
     wss.clients.forEach(client => {
         client.send(JSON.stringify({action:'broadcast', data: parsed.data}));
