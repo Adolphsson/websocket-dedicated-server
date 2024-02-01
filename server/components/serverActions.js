@@ -25,11 +25,11 @@ function receivePlayerState(wss, ws, parsed) {
 
 //This script you can use to send fast packages between players, without the need of running any backend function. All you need is create the action in the client.
 function broadcast(wss, ws, parsed){
-    if(parsed.data.function === 'receive_text') {
+    if(parsed.data.function === 'receive_text' && parsed.data.parameters.username !== 'Bengt') {
         // A chat message is being sent, let's read it and send it to chatGPT for a response
-        getChatResponseAsync(parsed.data.parameters.username, parsed.data.parameters.text).then((msg) => {
+        getChatResponseAsync(parsed.data.parameters.username, parsed.data.parameters.text).then(msg => {
             wss.clients.forEach(client => {
-                client.send(JSON.stringify({action:'broadcast', data: {parameters: {username: 'Bengt', text: msg, position: '(5,5)', audioIndex: 1}, function: 'receive_text'}}));
+                client.send(JSON.stringify({action:'broadcast', data: {function: 'receive_text', parameters: {username: 'Bengt', text: msg, position: '(5,5)', audioIndex: 1}}}));
            });
         });
     }

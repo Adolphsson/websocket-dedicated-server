@@ -1,4 +1,4 @@
-import OpenAI from 'openai';
+const OpenAI = require('openai');
 require('dotenv').config();
 
 const openai = new OpenAI({
@@ -8,10 +8,12 @@ const openai = new OpenAI({
 async function getChatResponseAsync(user, msg) {
     const chatCompletion = await openai.chat.completions.create({
         messages: [{ role: 'user', content: msg }],
-        model: 'gpt-3.5-turbo',
-      });
-    
-    return chatCompletion.choices[0];
+        model: 'gpt-4',
+    });
+
+    if(chatCompletion.choices[0].finish_reason === 'stop') {
+        return chatCompletion.choices[0].message.content;
+    }
 }
 
 module.exports = { getChatResponseAsync };

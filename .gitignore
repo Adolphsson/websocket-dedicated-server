@@ -18,3 +18,5 @@ data_*/
 mono_crash.*.json
 
 .history/
+
+node_modules
