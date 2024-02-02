@@ -60,9 +60,13 @@ func _process(delta: float) -> void:
 
 
 func move(moveSpeed):
+	#var inputDir = Vector2(
+	#	Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
+	#	Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+	#	).normalized()
 	var inputDir = Vector2(
-		Input.get_action_strength("move_right") - Input.get_action_raw_strength("move_left"),
-		Input.get_action_strength("move_backward") - Input.get_action_raw_strength("move_forward")
+		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
+		Input.get_action_strength("move_backward") - Input.get_action_strength("move_forward")
 		).normalized()
 	velocity = inputDir * moveSpeed
 	if inputDir != Vector2.ZERO:

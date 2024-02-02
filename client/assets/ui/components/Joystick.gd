@@ -6,10 +6,10 @@ extends Area2D
 @onready var max_distance = $CollisionShape2D.shape.radius
 @onready var dead_zone = 0.5
 
-@onready var left_action = "move_left"
-@onready var right_action = "move_right"
-@onready var up_action = "move_forward"
-@onready var down_action = "move_backward"
+@onready var left_action = "move_left" #"ui_left"
+@onready var right_action = "move_right" #"ui_right"
+@onready var up_action = "move_forward" #"ui_up"
+@onready var down_action = "move_backward" #"ui_down"
 
 var touched = false
 var current_action = {}
