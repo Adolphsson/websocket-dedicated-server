@@ -32,11 +32,11 @@ function broadcast(wss, ws, parsed){
     var npcPos = [5,5];
     var npcDeltaPos = [Math.abs(position[0] - npcPos[0]), Math.abs(position[1] - npcPos[1])];
     
-    if(parsed.data.function === 'receive_text' && parsed.data.parameters.username !== 'Bengt' && Math.sqrt((npcDeltaPos[0]*npcDeltaPos[0]) + (npcDeltaPos[1]*npcDeltaPos[1])) < 5.0) {
+    if(parsed.data.function === 'receive_text' && parsed.data.parameters.username !== 'Bengt' && Math.sqrt((npcDeltaPos[0]*npcDeltaPos[0]) + (npcDeltaPos[1]*npcDeltaPos[1])) < 10.0) {
         // A chat message is being sent, let's read it and send it to chatGPT for a response
         getChatResponseAsync(parsed.data.parameters.username, parsed.data.parameters.text).then(msg => {
             wss.clients.forEach(client => {
-                client.send(JSON.stringify({action:'broadcast', data: {function: 'receive_text', parameters: {username: 'Bengt', text: msg, position: '(' + bengtPos[0].toString() + ',' + bengtPos[1].toString() + ')', audioIndex: Math.round(Math.random()*6)}}}));
+                client.send(JSON.stringify({action:'broadcast', data: {function: 'receive_text', parameters: {username: 'Bengt', text: msg, position: '(' + npcPos[0].toString() + ',' + npcPos[1].toString() + ')', audioIndex: Math.round(Math.random()*6)}}}));
            });
         });
     }

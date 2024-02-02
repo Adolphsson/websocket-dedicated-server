@@ -1,5 +1,11 @@
 //This script defines the state of the server and keeps all users updated, here you'll store which players are online, their position and whatever you want more.
-let worldState = {};
+let worldState = {
+    'Bengt': {
+        'A': 'idle',
+        'D': ["down",false,{"body":"fat","bottoms":4,"eyes":5,"hairstyles":2,"mouths":1,"shoes":2,"top":1}],
+        'P': "(5, 5)"
+    }
+};
 let playerStateCollection = {};
 
 //Whenever the player sends their data, it stores in the matching state collection.
