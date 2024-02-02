@@ -23,9 +23,10 @@ func _process(_delta: float):
 	pass
 
 func _on_guest_login_button_pressed():
-	if guest_id == "":
-		guest_id = OS.get_unique_id()
-		if guest_id == null:
+	if guest_id == null or guest_id == "":
+		if (OS.get_name() == "Android" or OS.get_name() == "iOS"):
+			guest_id = OS.get_unique_id()
+		if guest_id == null or guest_id == "":
 			guest_id = GlobalFunctions.get_guid()
 		var file = FileAccess.open(GUEST_FILE, FileAccess.WRITE)
 		file.store_string(guest_id)
