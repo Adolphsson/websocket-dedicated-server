@@ -192,7 +192,6 @@ grow_vertical = 2
 script = ExtResource("2_8g4uv")
 
 [node name="Menu" type="Control" parent="Screens"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -262,17 +261,17 @@ secret = true
 
 [node name="LoginButton" type="Button" parent="Screens/Menu/Panel"]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -33.0
-offset_top = -47.0
-offset_right = 33.0
-offset_bottom = -16.0
+anchor_bottom = 0.5
+offset_left = 18.0
+offset_top = 15.5
+offset_right = 84.0
+offset_bottom = 46.5
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 theme = ExtResource("4_ftw3x")
 text = "LOGIN"
 
@@ -303,7 +302,7 @@ offset_bottom = -16.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("4_ftw3x")
-text = "GUEST"
+text = "SKIP"
 
 [node name="Register" type="Control" parent="Screens"]
 visible = false
@@ -450,10 +449,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 159.0
-offset_top = 369.0
-offset_right = 481.0
-offset_bottom = 400.0
+offset_left = -161.0
+offset_top = 9.0
+offset_right = 161.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("4_ftw3x")
@@ -615,9 +614,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 475.5
+offset_left = 155.5
 offset_top = -32.0
-offset_right = 672.5
+offset_right = 352.5
 offset_bottom = -9.0
 grow_horizontal = 2
 theme = ExtResource("4_ftw3x")

@@ -167,10 +167,13 @@ app.post('/login', async (req, res) => {
     const { email, password, guest_id } = req.body;
 
     try {
-        const user = await UserModel.findOne({ email });
+        var user = await UserModel.findOne({ email });
 
         if (!user) {
-            return res.status(400).send({ action: 'login_failed', message: 'Invalid username or password.' });
+            user = await UserModel.findOne({ username: email });
+            if (!user) {
+                return res.status(400).send({ action: 'login_failed', message: 'Invalid username or password.' });
+            }
         }
 
         if (user.status !== 'active') {
