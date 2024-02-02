@@ -40,18 +40,24 @@ const MapSchema = new mongoose.Schema({
 //In order to play, the user needs to register a new account and verify by inputing a code received via email on my website.
 const UserSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true },
-    status:{type:String,default:'pending'},
-    password: { type: String, required: true },
-    email: { type: String, required: true },
-    confirmationToken:String,
-    confirmationExpires:Date,
+    status:{ type: String, default: 'pending' },
+    password: { type: String, required: false },
+    email: { type: String, required: false },
+    guestID: { type: String, required: false },
+    confirmationToken: { type: String, required: false },
+    confirmationCreated: { type: Date, required: false, expires: 60*60 }, // Verification token times out after an hour
+    guestActive: { type: Date, required: false, expires: 60*60*24/**30*/ } // Guest users are deleted after a month of inactivity
+});
+
+const CharacterSchema = new mongoose.Schema({
+    name: { type: String, unique: true, required: true },
+    guestActive: { type: Date, required: false, expires: 60*60*24/**30*/ } // Guest user characters are deleted after a month of inactivity
 });
 
 const UserDataSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true },
     description: {type: String, unique: false, required:true},
-    arrestInfo:{type: String, unique: false,required:true},
-
+    arrestInfo:{type: String, unique: false,required:true}
 })
 
 const UserModel = mongoose.model('userdb', UserSchema, process.env.DATABASE_COLLECTION);
@@ -105,7 +111,7 @@ app.post('/register', async (req, res) => {
             password: hashedPassword,
             email: email,
             confirmationToken: confirmationCode,
-            confirmationExpires: Date.now() + 3600000 // 1 hour to expire the code.
+            confirmationCreated: Date.now() // Will expire in about 1 hour from now.
         });
 
         //Change the example email to the one registered in the smtp you're using.
@@ -127,12 +133,38 @@ app.post('/register', async (req, res) => {
     }
 });
 
+//Route for guest login.
+//Send http request to this route to login as guest.
+app.post('/guest', async (req, res) => {
+    const { guest_id } = req.body;
 
+    try {
+        const user = await UserModel.findOne({ guest_id });
+
+        if (!user) {
+            const newUser = new UserModel({
+                username: guest_id,
+                status: 'guest',
+                guestID: guest_id,
+                guestActive: Date.now()
+            });
+            newUser.save();
+            res.status(200).send({ action: 'guest_successful', message: 'Logged in successfully!', username: newUser.username, guest_id: newUser.guest_id });
+        }
+        else {
+            user.guestActive = Date.now();
+            user.save();
+            res.status(200).send({ action: 'guest_successful', message: 'Logged in successfully!', username: user.username, guest_id: user.guest_id });
+        }
+    } catch (err) {
+        res.status(500).send({ action: 'guest_failed', message: 'Login failed.', error: err });
+    }
+});
 
 //Route for user login.
 //Send http request to this route to login.
 app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, guest_id } = req.body;
 
     try {
         const user = await UserModel.findOne({ email });
@@ -146,6 +178,15 @@ app.post('/login', async (req, res) => {
         }
 
         if (await bcrypt.compare(password, user.password)) {
+            if(user.guestActive) {
+                // Guest has created account, remove guest info
+                user.guestID = null;
+                user.guestActive = null;
+                user.save();
+            }
+            if (guest_id) {
+                // Add guest character to user
+            }
             res.status(200).send({ action: 'login_successful', message: 'Logged in successfully!', username: user.username });
         } else {
             res.status(400).send({ action: 'login_failed', message: 'Invalid username or password.' });
@@ -166,14 +207,10 @@ app.post('/confirm_code', async (req, res) => {
             return res.status(400).send({ action: 'verify_failed', message: 'User not found.' });
         }
 
-        if (user.confirmationExpires < Date.now()) {
-            return res.status(400).send({ action: 'verify_failed', message: 'Code has expired.' });
-        }
-
         if (user.confirmationToken === code) {
             user.status = 'active';
             user.confirmationToken = undefined;
-            user.confirmationExpires = undefined;
+            user.confirmationCreated = undefined;
             await user.save();
             return res.status(200).send({ action: 'verify_successful', message: 'Email confirmed successfully.' });
         } else {

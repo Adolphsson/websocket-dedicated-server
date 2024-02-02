@@ -5,6 +5,7 @@ var dbURL := "https://game.adolphsson.se/api"
 
 var username := ""
 var email := ""
+var guest_id := ""
 
 func _ready():
 	httpRequest.request_completed.connect(self._on_request_completed)
@@ -23,8 +24,14 @@ func confirm(p_email, p_code):
 	GlobalSignals.emit_signal("SEND_NOTIFICATION", "Verifying account...")
 
 
-func login(p_username, p_password):
-	var data = {"email": p_username, "password": p_password}
+func guest_login(p_guest_id):
+	var data = {"guest_id": p_guest_id}
+	http_request(dbURL + "/guest", data)
+
+func login(p_username, p_password, p_guest_id):
+	if p_guest_id == "":
+		p_guest_id = null
+	var data = {"email": p_username, "password": p_password, "guest_id": p_guest_id}
 	http_request(dbURL + "/login", data)
 	GlobalSignals.emit_signal("SEND_NOTIFICATION", "Trying login...")
 
@@ -62,10 +69,17 @@ func _on_request_completed(_result, p_response_code, _headers, p_body):
 				GlobalSignals.emit_signal("SEND_NOTIFICATION", response["message"])
 				username = response["username"]
 				Server.try_server_connection(Server.server_url)
+				DirAccess.remove_absolute("user://guest.txt")
 			"register_successful":
 				GlobalSignals.emit_signal("CHANGE_SCREEN", "Verify")
 				GlobalSignals.emit_signal("SEND_NOTIFICATION", response["message"])
 				email = response["email"]
+			"guest_successful":
+				GlobalSignals.emit_signal("CHANGE_SCREEN", "Play")
+				GlobalSignals.emit_signal("SEND_NOTIFICATION", response["message"])
+				guest_id = response["guest_id"]
+				username = response["username"]
+				Server.try_server_connection(Server.server_url)
 			"verify_successful":
 				GlobalSignals.emit_signal("CHANGE_SCREEN", "Menu")
 				GlobalSignals.emit_signal("SEND_NOTIFICATION", response["message"])
@@ -85,6 +99,8 @@ func _on_request_completed(_result, p_response_code, _headers, p_body):
 				"login_failed":
 					GlobalSignals.emit_signal("SEND_NOTIFICATION", response["message"])
 				"register_failed":
+					GlobalSignals.emit_signal("SEND_NOTIFICATION", response["message"])
+				"guest_failed":
 					GlobalSignals.emit_signal("SEND_NOTIFICATION", response["message"])
 				"verify_failed":
 					GlobalSignals.emit_signal("SEND_NOTIFICATION", response["message"])

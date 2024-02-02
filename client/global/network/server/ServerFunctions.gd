@@ -47,3 +47,4 @@ func load_player_state(params):
 func play_audio(params):
 	if params["user"] != Database.username:
 		AudioController.play_audio(params["audio"], params["position"])
+

@@ -289,6 +289,22 @@ grow_vertical = 0
 theme = ExtResource("4_ftw3x")
 text = "CREATE ACCOUNT"
 
+[node name="GuestButton" type="Button" parent="Screens/Menu/Panel"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -82.0
+offset_top = -47.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_ftw3x")
+text = "GUEST"
+
 [node name="Register" type="Control" parent="Screens"]
 visible = false
 layout_mode = 1
@@ -661,6 +677,7 @@ script = ExtResource("20_t0vra")
 [connection signal="text_submitted" from="Screens/Menu/Panel/PasswordInput" to="Screens/Menu" method="_on_password_input_text_submitted"]
 [connection signal="pressed" from="Screens/Menu/Panel/LoginButton" to="Screens/Menu" method="_on_login_button_pressed"]
 [connection signal="pressed" from="Screens/Menu/Panel/RegisterButton" to="Screens/Menu" method="_on_register_button_pressed"]
+[connection signal="pressed" from="Screens/Menu/Panel/GuestButton" to="Screens/Menu" method="_on_guest_login_button_pressed"]
 [connection signal="text_submitted" from="Screens/Register/Panel/UserInput" to="Screens/Register" method="_on_user_input_text_submitted"]
 [connection signal="text_submitted" from="Screens/Register/Panel/PasswordInput" to="Screens/Register" method="_on_password_input_text_submitted"]
 [connection signal="text_submitted" from="Screens/Register/Panel/EmailInput" to="Screens/Register" method="_on_password_input_2_text_submitted"]
