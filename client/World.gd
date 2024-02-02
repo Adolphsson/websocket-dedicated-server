@@ -40,8 +40,8 @@ func update_world_state(worldState):
 					var path = peers.get_path()
 					var peer = get_node(str(path) + str("/" + str(player)))
 					peer.update_state(worldState[player]["P"], worldState[player]["A"], worldState[player]["D"])
-	#				else:
-	#					despawn_player(player)
+				else:
+					despawn_player(player)
 			else:
 				if player != "undefined":
 					spawn_player(player, worldState[player]["P"])
