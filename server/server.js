@@ -7,8 +7,6 @@ const { savePlayerData, uuidToUsername } = require('./components/dataHandler');
 const { stateProcess, playerStateCollection } = require('./components/stateProcessing');
 const { readyPlayer, broadcast, receivePlayerState, ping } = require('./components/serverActions');
 
-const { getChatResponseAsync } = require('./components/npcProcessing');
-
 const app = express();
 app.use ('/healthcheck', require ('express-healthcheck')({
     healthy: function () {
