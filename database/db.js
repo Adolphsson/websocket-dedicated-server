@@ -138,7 +138,7 @@ app.post('/register', async (req, res) => {
 app.post('/guest', async (req, res) => {
     const { guest_id } = req.body;
 
-    if (guest_id || guest_id === '') {
+    if (!guest_id || guest_id === '') {
         res.status(500).send({ action: 'guest_failed', message: 'Login failed.', error: 'No guest_id' });
     }
 
