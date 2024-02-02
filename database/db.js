@@ -149,12 +149,12 @@ app.post('/guest', async (req, res) => {
                 guestActive: Date.now()
             });
             newUser.save();
-            res.status(200).send({ action: 'guest_successful', message: 'Logged in successfully!', username: newUser.username, guest_id: newUser.guest_id });
+            res.status(200).send({ action: 'guest_successful', message: 'Logged in successfully!', username: newUser.username, guest_id: newUser.guestID });
         }
         else {
             user.guestActive = Date.now();
             user.save();
-            res.status(200).send({ action: 'guest_successful', message: 'Logged in successfully!', username: user.username, guest_id: user.guest_id });
+            res.status(200).send({ action: 'guest_successful', message: 'Logged in successfully!', username: user.username, guest_id: user.guestID });
         }
     } catch (err) {
         res.status(500).send({ action: 'guest_failed', message: 'Login failed.', error: err });
