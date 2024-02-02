@@ -15,7 +15,7 @@ const updatePlayerState = (playerId, playerState) => {
 function broadcastWorldState(wss){
     //TODO: This kind of broadcast can be very costly, try to make it location dependant and only send the update to players within viewing distance of each other 
     wss.clients.forEach(client => {
-             client.send(JSON.stringify({action:'receive_world_state', data: worldState}));
+            client.send(JSON.stringify({action:'receive_world_state', data: worldState}));
         });
     };
 

@@ -8,7 +8,7 @@ const openai = new OpenAI({
 async function getChatResponseAsync(user, msg) {
     const chatCompletion = await openai.chat.completions.create({
         messages: [{ role: 'user', content: msg }],
-        model: 'gpt-4',
+        model: 'gpt-4'
     });
 
     if(chatCompletion.choices[0].finish_reason === 'stop') {
