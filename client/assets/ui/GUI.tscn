@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://c5xo2p1r7tn85"]
+[gd_scene load_steps=35 format=3 uid="uid://c5xo2p1r7tn85"]
 
 [ext_resource type="Script" path="res://assets/ui/GUI.gd" id="1_0rf7o"]
 [ext_resource type="Script" path="res://assets/ui/states/StateManager.gd" id="1_054fu"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://7vrokuef0auw" path="res://sprites/ui/up-button-pressed.png" id="9_uqbsb"]
 [ext_resource type="Texture2D" uid="uid://cjk1ms1a3h6ps" path="res://sprites/ui/chat.png" id="10_q41dt"]
 [ext_resource type="PackedScene" uid="uid://cgjdjhiwftt6h" path="res://assets/ui/components/Joystick.tscn" id="11_dqu1v"]
+[ext_resource type="PackedScene" uid="uid://m4bca4xun7b5" path="res://assets/ui/components/ChatBox.tscn" id="12_kqc35"]
 [ext_resource type="Script" path="res://assets/ui/states/StateVerify.gd" id="16_62mn6"]
 [ext_resource type="Texture2D" uid="uid://csn7b20hlhp8f" path="res://sprites/ui/fullscreen-on.png" id="20_ncduf"]
 [ext_resource type="Script" path="res://assets/ui/FullScreenButton.gd" id="20_t0vra"]
@@ -535,6 +536,14 @@ action = "chat"
 
 [node name="Joystick" parent="Screens/Play/ScreenControls" instance=ExtResource("11_dqu1v")]
 position = Vector2(71, 72)
+
+[node name="ChatBox" parent="Screens/Play" instance=ExtResource("12_kqc35")]
+custom_minimum_size = Vector2(300, 150)
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -330.0
+offset_bottom = -200.0
 
 [node name="Verify" type="Control" parent="Screens"]
 visible = false

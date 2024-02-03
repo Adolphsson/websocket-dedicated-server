@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://m4bca4xun7b5"]
+
+[ext_resource type="Script" path="res://assets/ui/components/ChatBox.gd" id="1_hyd6p"]
+
+[sub_resource type="Theme" id="Theme_k7rrv"]
+default_font_size = 8
+
+[node name="ChatBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -240.0
+offset_bottom = -172.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hyd6p")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_k7rrv")
+bbcode_enabled = true
+scroll_following = true
