@@ -36,8 +36,11 @@ func _action(action, pressed):
 	if current_action[action] != pressed:
 		current_action[action] = pressed
 		var evt = InputEventAction.new()
+		#evt.set_as_action(action, pressed)
 		evt.action = action
 		evt.pressed = pressed
+		evt.strength = 1.0
+		evt.device = 0
 		Input.parse_input_event(evt)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
