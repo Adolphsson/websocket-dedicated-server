@@ -1,32 +1,66 @@
-[gd_scene load_steps=3 format=3 uid="uid://m4bca4xun7b5"]
+[gd_scene load_steps=5 format=3 uid="uid://m4bca4xun7b5"]
 
 [ext_resource type="Script" path="res://assets/ui/components/ChatBox.gd" id="1_hyd6p"]
 
-[sub_resource type="Theme" id="Theme_k7rrv"]
+[sub_resource type="Theme" id="Theme_7v4g2"]
 default_font_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ceftj"]
+bg_color = Color(0.152941, 0.152941, 0.152941, 0.862745)
+
+[sub_resource type="Theme" id="Theme_k7rrv"]
+default_font_size = 7
 
 [node name="ChatBox" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -240.0
-offset_bottom = -172.0
+offset_right = -340.0
+offset_bottom = -160.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hyd6p")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 100.0
+theme = SubResource("Theme_7v4g2")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ceftj")
+drag_to_rearrange_enabled = true
+tab_focus_mode = 0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+[node name="All" type="RichTextLabel" parent="TabContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = SubResource("Theme_k7rrv")
 bbcode_enabled = true
 scroll_following = true
+
+[node name="Clan" type="RichTextLabel" parent="TabContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_k7rrv")
+bbcode_enabled = true
+scroll_following = true
+
+[node name="PM" type="RichTextLabel" parent="TabContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_k7rrv")
+bbcode_enabled = true
+scroll_following = true
+
+[node name="System" type="RichTextLabel" parent="TabContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_k7rrv")
+bbcode_enabled = true
+scroll_following = true
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
