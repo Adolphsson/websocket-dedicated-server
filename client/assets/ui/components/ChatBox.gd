@@ -14,6 +14,8 @@ var group_index = 0
 func _ready():
 	#chatLog.add_theme_font_size_override("normal_font_size", 32)
 	GlobalSignals.connect("RECEIVE_TEXT", update_received_text)
+	GlobalSignals.connect("PLAYER_CONNECTED", update_player_connect)
+	GlobalSignals.connect("PLAYER_DISCONNECTED", update_player_disconnect)
 
 func _input(event):
 	if event is InputEventKey:
@@ -22,6 +24,12 @@ func _input(event):
 
 func update_received_text(peerID, new_text, group = 0):
 	chatLog.text += '\n[color=' + groups[group].color + '][' + peerID + ']: ' + new_text + '[/color]'
+
+func update_player_connect(peerID):
+	chatLog.text += '\n[color=#ffffff]' + peerID + ' connected.[/color]'
+
+func update_player_disconnect(peerID):
+	chatLog.text += '\n[color=#ffffff]' + peerID + ' disconnected.[/color]'
 
 func change_group(value):
 	if group_index + value > (groups.size() - 1):

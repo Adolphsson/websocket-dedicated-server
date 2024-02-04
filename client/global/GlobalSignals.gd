@@ -22,3 +22,5 @@ signal DISPLAY_INFO(type,data)
 # server-signals
 signal RECEIVE_TEXT(peerID,text)
 signal LOAD_PLAYER_STATE(state)
+signal PLAYER_CONNECTED(player_id)
+signal PLAYER_DISCONNECTED(player_id)

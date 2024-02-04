@@ -1,9 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://cftglfuliop4n"]
+[gd_scene load_steps=20 format=3 uid="uid://cftglfuliop4n"]
 
 [ext_resource type="Script" path="res://assets/peer/Peer.gd" id="1_yxklb"]
-[ext_resource type="Theme" uid="uid://dictf83vmdo2" path="res://assets/ui/themes/speech-bubble-theme.tres" id="2_opnxr"]
 [ext_resource type="Script" path="res://assets/player/Traits.gd" id="2_pfoyg"]
-[ext_resource type="Script" path="res://assets/ui/components/PeerSpeechBox.gd" id="3_5wmbd"]
 [ext_resource type="Shader" path="res://scripts/HitOpacity.gdshader" id="5_wtcoo"]
 [ext_resource type="Texture2D" uid="uid://cgrpi01wshgbw" path="res://sprites/character/body/fat/down.png" id="6_qu6wm"]
 [ext_resource type="Texture2D" uid="uid://bidkhbphi7bn5" path="res://sprites/character/traits/fat/down/eyes/1.png" id="7_fn0e6"]
@@ -403,29 +401,19 @@ offset_bottom = -30.0
 label_settings = SubResource("LabelSettings_cgqas")
 horizontal_alignment = 1
 
-[node name="SpeechBoxLabel" type="Label" parent="."]
-visible = false
-modulate = Color(1, 1, 1, 0.784314)
-texture_filter = 1
-clip_contents = true
+[node name="SpeechBubbles" type="VBoxContainer" parent="."]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -8.0
-offset_top = -50.0
-offset_right = 9.0
-offset_bottom = -32.0
+offset_left = -100.0
+offset_top = -150.0
+offset_right = 100.0
+offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 0
-size_flags_horizontal = 4
-theme = ExtResource("2_opnxr")
-theme_override_font_sizes/font_size = 8
-horizontal_alignment = 1
-script = ExtResource("3_5wmbd")
-
-[node name="Timer" type="Timer" parent="SpeechBoxLabel"]
+alignment = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ewdcp")
@@ -486,5 +474,3 @@ texture_filter = 1
 offset_top = -30.0
 offset_right = 9.0
 tooltip_text = ""
-
-[connection signal="timeout" from="SpeechBoxLabel/Timer" to="SpeechBoxLabel" method="_on_timer_timeout"]

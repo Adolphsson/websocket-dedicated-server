@@ -1,12 +1,14 @@
 class_name Player
 extends CharacterBody2D
 
+@onready var bubbleObject = preload("res://assets/ui/components/SpeechBubble.tscn")
 @onready var animations = $Animations
 @onready var states = $StateManager
 @onready var traits = $Traits
 @onready var angleMovement = $AngleMovement
 @onready var terrainDetector = $TerrainDetector
 @onready var nameLabel = $Name
+@onready var speechBubbles = $SpeechBubbles
 var controlling = true
 var playerState = {}
 
@@ -16,8 +18,15 @@ func _ready() -> void:
 	GlobalSignals.connect("CHANGE_PLAYER_STATE",change_player_state)
 	GlobalSignals.connect("CHANGE_PLAYER_CONTROL_STATE",change_player_control_state)
 	GlobalSignals.connect("LOAD_PLAYER_STATE",load_player_state)
+	GlobalSignals.connect("RECEIVE_TEXT", update_received_text)
 	states.init(self)
 	change_player_state(false)
+
+func update_received_text(peerID, new_text):
+	if peerID == Database.username:
+		var bubble = bubbleObject.instantiate()
+		bubble.text = new_text
+		speechBubbles.add_child(bubble)
 
 
 func change_player_state(value):

@@ -3,7 +3,7 @@ extends Node2D
 @onready var peers = $Peers
 
 var lastWorldState = 0
-
+var worldInitialising = true
 
 func spawn_player(playerID, spawnPosition):
 	if Database.username == playerID:
@@ -16,14 +16,17 @@ func spawn_player(playerID, spawnPosition):
 		newPlayer.name = str(playerID)
 		peers.add_child(newPlayer)
 		EffectController.play_fx(spawnPosition, newPlayer)
-
+		# Let's not send a PLAYER_CONNECTED signal for every existing player on
+		# this server when we are connecting to it
+		if !worldInitialising:
+			GlobalSignals.emit_signal("PLAYER_CONNECTED", newPlayer.name)
 
 func despawn_player(player_id):
 	var path = peers.get_path()
 	var peer = str(path) + str("/", player_id)
 	var peer_node = get_node(peer)
 	peer_node.queue_free()
-
+	GlobalSignals.emit_signal("PLAYER_DISCONNECTED", player_id)
 
 func update_world_state(worldState):
 	#Buffer
@@ -45,3 +48,5 @@ func update_world_state(worldState):
 			else:
 				if player != "undefined":
 					spawn_player(player, worldState[player]["P"])
+		# First world state processed
+		worldInitialising = false
