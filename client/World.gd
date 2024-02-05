@@ -15,11 +15,13 @@ func spawn_player(playerID, spawnPosition):
 		newPlayer.global_position = spawnPosition
 		newPlayer.name = str(playerID)
 		peers.add_child(newPlayer)
-		EffectController.play_fx(spawnPosition, newPlayer)
 		# Let's not send a PLAYER_CONNECTED signal for every existing player on
 		# this server when we are connecting to it
 		if !worldInitialising:
+			EffectController.play_fx(spawnPosition, newPlayer)
 			GlobalSignals.emit_signal("PLAYER_CONNECTED", newPlayer.name)
+		
+		return newPlayer
 
 func despawn_player(player_id):
 	var path = peers.get_path()
@@ -47,6 +49,8 @@ func update_world_state(worldState):
 					despawn_player(player)
 			else:
 				if player != "undefined":
-					spawn_player(player, worldState[player]["P"])
+					var peer = spawn_player(player, worldState[player]["P"])
+					if peer:
+						peer.update_state(worldState[player]["P"], worldState[player]["A"], worldState[player]["D"])
 		# First world state processed
 		worldInitialising = false
