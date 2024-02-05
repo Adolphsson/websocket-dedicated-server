@@ -38,14 +38,6 @@ theme = SubResource("Theme_k7rrv")
 bbcode_enabled = true
 scroll_following = true
 
-[node name="Clan" type="RichTextLabel" parent="TabContainer"]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-theme = SubResource("Theme_k7rrv")
-bbcode_enabled = true
-scroll_following = true
-
 [node name="PM" type="RichTextLabel" parent="TabContainer"]
 visible = false
 layout_mode = 2

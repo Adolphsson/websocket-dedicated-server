@@ -1,14 +1,12 @@
 extends Control
 
 @onready var chatAll = get_node("TabContainer/All")
-@onready var chatClan = get_node("TabContainer/Clan")
 @onready var chatPM = get_node("TabContainer/PM")
 @onready var chatSystem = get_node("TabContainer/System")
 
 var groups = [
 	{'name': 'All', 'color': '#34c5f1'},
-	{'name': 'Clan', 'color': '#f1c234'},
-	{'name': 'PM', 'color': '#ffffff'},
+	{'name': 'PM', 'color': '#f1c234'},
 	{'name': 'System', 'color': '#ffffff'}
 ]
 
