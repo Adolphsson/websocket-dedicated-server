@@ -59,6 +59,9 @@ wss.on('connection', (ws, req) => {
     ws.on('message', (message) => {
         if (typeof message !== 'string') {
             console.log('Message type: ' + typeof message)
+            if (typeof message === 'object') {
+                console.log('Object is: ' + JSON.stringify(message))
+            }
 			//ws.close(4000, STR_INVALID_TRANSFER_MODE);
 			//return;
 		}
