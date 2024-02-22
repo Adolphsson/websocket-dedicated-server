@@ -57,6 +57,16 @@ wss.on('connection', (ws, req) => {
     ws.send(JSON.stringify({ action: 'assignUUID', uuid: ws.playerUUID, id: ws.peerID }));
 
     ws.on('message', (message) => {
+        /*if (typeof message === 'object') {
+            if (message.type === 'Buffer') {
+                //message.data
+            }
+            else {
+                ws.close(4000, STR_INVALID_TRANSFER_MODE);
+			    return;
+            }
+        }
+
         if (typeof message !== 'string') {
             console.log('Message type: ' + typeof message)
             if (typeof message === 'object') {
@@ -64,24 +74,26 @@ wss.on('connection', (ws, req) => {
             }
 			//ws.close(4000, STR_INVALID_TRANSFER_MODE);
 			//return;
-		}
-        try {
-            //All the messages received should be in this format: {action:actionHandler, data:data}.
-            const parsed = JSON.parse(message);
+		}*/
+        if (typeof message === 'string') {
+            try {
+                //All the messages received should be in this format: {action:actionHandler, data:data}.
+                const parsed = JSON.parse(message);
 
-            const actionHandler = actionHandlers[parsed.action];
-            if (actionHandler) {
-                actionHandler(wss, ws, parsed, clients);
+                const actionHandler = actionHandlers[parsed.action];
+                if (actionHandler) {
+                    actionHandler(wss, ws, parsed, clients);
+                }
+                else {
+                    ws.send(JSON.stringify({ status: 'error', message: 'Invalid action' }));
+                }
+            } catch (e) {
+                const code = e.code || 4000;
+                console.log(`Error parsing message from ${ws.peerID}:\n${
+                    message}`);
+                ws.close(code, e.message);
             }
-            else {
-                ws.send(JSON.stringify({ status: 'error', message: 'Invalid action' }));
-            }
-        } catch (e) {
-			const code = e.code || 4000;
-			console.log(`Error parsing message from ${ws.peerID}:\n${
-				message}`);
-			ws.close(code, e.message);
-		}
+        }
     });
 
     //Whenever the user closes the connection, it saves its state collection, broadcast to all other players that the player left and delete its state collection and uuid.

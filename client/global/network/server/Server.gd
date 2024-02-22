@@ -2,15 +2,10 @@ extends ServerFunctions
 
 @onready var networkTimer = $Timer
 
-const SIGNALING_TYPE_OFFER = 4
-const SIGNALING_TYPE_ANSWER = 5
-const SIGNALING_TYPE_CANDIDATE = 6
-
-var rtc_mp: WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new()
 
 func _ready():
 	set_process(false)
-	GlobalSignals.connect("LOAD_PLAYER_STATE", load_player_state)
+
 
 func _process(_delta: float):
 	ws.poll()
@@ -83,73 +78,10 @@ func on_data_received():
 					if "function" in parsedPackage["data"]:
 						if "parameters" in parsedPackage["data"]:
 							call(parsedPackage["data"]["function"], parsedPackage["data"]["parameters"])
-			"signaling":
-				if "data" in parsedPackage:
-					if (("type" in parsedPackage["data"]) and ("id" in parsedPackage["data"]) and ("data" in parsedPackage["data"])):
-						var src_id = str(parsedPackage["data"]["id"]).to_int()
-						var data = parsedPackage["data"]["data"]
-						match parsedPackage["data"]["type"]:
-							SIGNALING_TYPE_OFFER:
-								if rtc_mp.has_peer(src_id):
-									rtc_mp.get_peer(src_id).connection.set_remote_description("offer", data)
-							SIGNALING_TYPE_ANSWER:
-								if rtc_mp.has_peer(src_id):
-									rtc_mp.get_peer(src_id).connection.set_remote_description("answer", data)
-							SIGNALING_TYPE_CANDIDATE:
-								var candidate: PackedStringArray = data.split("\n", false)
-								if candidate.size() != 3:
-									return false
-								if not candidate[1].is_valid_int():
-									return false
-								if rtc_mp.has_peer(src_id):
-									rtc_mp.get_peer(src_id).connection.add_ice_candidate(candidate[0], candidate[1].to_int(), candidate[2])
 	else:
 #		print("Invalid action: ", parsedPackage)
 		pass
 
-func load_player_state(userData):
-	var peer: WebRTCPeerConnection = WebRTCPeerConnection.new()
-	peer.initialize({
-		"iceServers": [ { "urls": ["stun:stun.l.google.com:19302"] } ]
-	})
-	peer.session_description_created.connect(self._offer_created.bind(userData["userData"]["playerID"]))
-	peer.ice_candidate_created.connect(self._new_ice_candidate.bind(userData["userData"]["playerID"]))
-	rtc_mp.add_peer(peer, userData["userData"]["playerID"])
-	if userData["userData"]["playerID"] < rtc_mp.get_unique_id(): # So lobby creator never creates offers.
-		peer.create_offer()
-
-func _new_ice_candidate(mid_name, index_name, sdp_name, id):
-	send_candidate(id, mid_name, index_name, sdp_name)
-
-
-func _offer_created(type, data, id):
-	if not rtc_mp.has_peer(id):
-		return
-	print("created", type)
-	rtc_mp.get_peer(id).connection.set_local_description(type, data)
-	if type == "offer": send_offer(id, data)
-	else: send_answer(id, data)
-
-func send_candidate(id, mid, index, sdp) -> int:
-	return _send_msg(SIGNALING_TYPE_CANDIDATE, id, "\n%s\n%d\n%s" % [mid, index, sdp])
-
-
-func send_offer(id, offer) -> int:
-	return _send_msg(SIGNALING_TYPE_OFFER, id, offer)
-
-func send_answer(id, answer) -> int:
-	return _send_msg(SIGNALING_TYPE_ANSWER, id, answer)
-
-
-func _send_msg(type: int, id: int, data:="") -> int:
-	return ws.send_text(JSON.stringify({
-		"action": "signaling",
-		"data": {
-			"type": type,
-			"id": id,
-			"data": data
-		}
-	}))
 
 func _on_ping_timer_timeout():
 	broadcast("ping", { "sent": Time.get_ticks_msec() })

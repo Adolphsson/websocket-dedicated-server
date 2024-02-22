@@ -15,10 +15,7 @@ function readyPlayer(wss, ws, parsed, clients) {
         }
     }
     uuidToUsername[ws.playerUUID] = parsed.data.username;
-    var userData = loadPlayerData(parsed.data.username);
-    userData.playerUUID = ws.playerUUID;
-    userData.playerID = ws.peerID;
-    const data = {userData: userData};
+    const data = {userData: loadPlayerData(parsed.data.username), playerUUID: ws.playerUUID, playerID: ws.peerID};
     if (data) ws.send(JSON.stringify({action:'broadcast',data:{function:'load_player_state',parameters:data}}));
 }
 
