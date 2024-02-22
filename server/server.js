@@ -74,7 +74,7 @@ wss.on('connection', (ws, req) => {
             }
         } catch (e) {
 			const code = e.code || 4000;
-			console.log(`Error parsing message from ${id}:\n${
+			console.log(`Error parsing message from ${ws.peerID}:\n${
 				message}`);
 			ws.close(code, e.message);
 		}
