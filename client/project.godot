@@ -12,7 +12,7 @@ config_version=5
 
 config/name="island-demo"
 run/main_scene="res://World.tscn"
-config/features=PackedStringArray("4.2", "GL Compatibility")
+config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/bg_color=Color(0.0235294, 0.0235294, 0.0313726, 1)
 boot_splash/show_image=false
 config/icon="res://icon.svg"
@@ -29,13 +29,12 @@ EffectController="*res://global/controllers/EffectController.gd"
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=360
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/size/window_width_override=1920
 window/size/window_height_override=1080
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
 window/stretch/aspect="expand"
-window/vsync/vsync_mode=0
 mouse_cursor/custom_image="res://sprites/ui/cursor.png"
 
 [filesystem]
@@ -136,6 +135,15 @@ slot_4={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":52,"key_label":0,"unicode":52,"echo":false,"script":null)
 ]
 }
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[network]
+
+limits/packet_peer_stream/max_buffer_po2=32
+limits/webrtc/max_channel_in_buffer_kb=128
 
 [rendering]
 

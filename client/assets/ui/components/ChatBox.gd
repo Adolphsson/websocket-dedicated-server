@@ -1,8 +1,9 @@
 extends Control
 
-@onready var chatAll = get_node("TabContainer/All")
-@onready var chatPM = get_node("TabContainer/PM")
-@onready var chatSystem = get_node("TabContainer/System")
+@onready var tabContainer = get_node("VBoxContainer/TabContainer")
+@onready var chatAll = get_node("VBoxContainer/TabContainer/All")
+@onready var chatPM = get_node("VBoxContainer/TabContainer/PM")
+@onready var chatSystem = get_node("VBoxContainer/TabContainer/System")
 
 var groups = [
 	{'name': 'All', 'color': '#34c5f1'},
@@ -53,11 +54,11 @@ func _process(delta):
 
 # Darker background on hover needs more testing.
 func _on_mouse_entered():
-	var panel = $TabContainer.get("theme_override_styles/panel")
+	var panel = tabContainer.get("theme_override_styles/panel")
 	#panel.bg_color = Color(0, 0, 0, 0.1)
 	#$TabContainer.set("theme_override_styles/panel", panel)
 
 func _on_mouse_exited():
-	var panel = $TabContainer.get("theme_override_styles/panel")
+	var panel = tabContainer.get("theme_override_styles/panel")
 	#panel.bg_color = Color(0, 0, 0, 0.8)
 	#$TabContainer.set("theme_override_styles/panel", panel)

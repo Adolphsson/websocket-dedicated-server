@@ -1,7 +1,7 @@
 extends Control
 @onready var textInput = $TextInput
 @onready var animations = $Animation
-@onready var tip = $Tip
+@onready var tip = $MouseControls/Tip
 @onready var screenControls = $ScreenControls
 
 

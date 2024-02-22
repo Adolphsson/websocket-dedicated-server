@@ -4,7 +4,7 @@ extends Area2D
 @onready var knob = $BigCircle/Knob
 
 @onready var max_distance = $CollisionShape2D.shape.radius
-@onready var dead_zone = 0.5
+@onready var dead_zone = 0.2
 
 @onready var left_action = "move_left" #"ui_left"
 @onready var right_action = "move_right" #"ui_right"
@@ -39,8 +39,9 @@ func _action(action, pressed):
 		evt.action = action
 		evt.pressed = pressed
 		#evt.strength = 1.0
-		#evt.device = 0
+		evt.device = 0
 		Input.parse_input_event(evt)
+		print_debug(current_action)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

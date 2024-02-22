@@ -18,3 +18,27 @@ texture = ExtResource("3_pghf3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_lqb1a")
+
+[node name="move_left" type="ColorRect" parent="."]
+offset_left = 37.0
+offset_top = -21.0
+offset_right = 41.0
+offset_bottom = 19.0
+
+[node name="move_right" type="ColorRect" parent="."]
+offset_left = -42.0
+offset_top = -22.0
+offset_right = -38.0
+offset_bottom = 18.0
+
+[node name="move_forward" type="ColorRect" parent="."]
+offset_left = -21.0
+offset_top = -40.0
+offset_right = 22.0
+offset_bottom = -35.0
+
+[node name="move_backward" type="ColorRect" parent="."]
+offset_left = -22.0
+offset_top = 36.0
+offset_right = 21.0
+offset_bottom = 41.0

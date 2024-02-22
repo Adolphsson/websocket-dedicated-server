@@ -2,10 +2,11 @@
 const { loadPlayerData, loadMapData ,loadPlayerInventory } = require('./dataHandler');
 const { updatePlayerState } = require('./stateProcessing');
 const { getChatResponseAsync } = require('./npcProcessing');
+const { getSignalResponseAsync } = require('./signalProcessing');
 const { uuidToUsername } = require('./dataHandler');
 
 //Here the server will match the uuid with the username, load the player data and send it back so the client can restore.
-function readyPlayer(wss, ws, parsed) {
+function readyPlayer(wss, ws, parsed, clients) {
     for (let id in uuidToUsername){
         if (parsed.data.username == uuidToUsername[id]){
             ws.send(JSON.stringify({action:'broadcast', message: 'Already connected...'}));
@@ -14,17 +15,20 @@ function readyPlayer(wss, ws, parsed) {
         }
     }
     uuidToUsername[ws.playerUUID] = parsed.data.username;
-    const data = {userData:loadPlayerData(parsed.data.username)};
+    var userData = loadPlayerData(parsed.data.username);
+    userData.playerUUID = ws.playerUUID;
+    userData.playerID = ws.peerID;
+    const data = {userData: userData};
     if (data) ws.send(JSON.stringify({action:'broadcast',data:{function:'load_player_state',parameters:data}}));
 }
 
 //This function will receive the player's current state, such as position, animation and etc, and it will send to all the other players online via updatePlayerState().
-function receivePlayerState(wss, ws, parsed) {
+function receivePlayerState(wss, ws, parsed, clients) {
     updatePlayerState(uuidToUsername[ws.playerUUID], parsed.data);
 }
 
 //This script you can use to send fast packages between players, without the need of running any backend function. All you need is create the action in the client.
-function broadcast(wss, ws, parsed){
+function broadcast(wss, ws, parsed, clients){
     if(parsed.data.parameters.position) {
         var position = parsed.data.parameters.position.replace('(', '').replace(')', '').split(',');
         for (var i = 0; i < position.length; i++) {
@@ -50,8 +54,12 @@ function broadcast(wss, ws, parsed){
 };
 
 //This function will respond to the client that send the request and can be used to measure the round trip time.
-function ping(wss, ws, parsed){
+function ping(wss, ws, parsed, clients){
     ws.send(JSON.stringify({ action: 'pong', data: parsed.data }));
 };
 
-module.exports = { readyPlayer, receivePlayerState, broadcast, ping };
+function signaling(wss, ws, parsed, clients) {
+    getSignalResponse(wss, ws, parsed.data, clients);
+}
+
+module.exports = { readyPlayer, receivePlayerState, broadcast, ping, signaling };

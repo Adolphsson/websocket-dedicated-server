@@ -84,4 +84,8 @@ func _input(event):
 	
 	if current_input_mode != new_input_mode:
 		current_input_mode = new_input_mode
+		if new_input_mode == GlobalSignals.INPUT_TYPE_TOUCH and DisplayServer.screen_get_dpi() > 120:
+			get_tree().root.content_scale_factor = 2.0
+		else:
+			get_tree().root.content_scale_factor = 1.0
 		GlobalSignals.emit_signal("CHANGE_INPUT_TYPE", new_input_mode)

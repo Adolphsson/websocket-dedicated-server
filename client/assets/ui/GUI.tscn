@@ -451,27 +451,54 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 159.0
-offset_top = 369.0
-offset_right = 481.0
-offset_bottom = 400.0
+offset_left = -801.0
+offset_top = -711.0
+offset_right = -479.0
+offset_bottom = -680.0
 grow_horizontal = 2
 grow_vertical = 0
+pivot_offset = Vector2(161, 0)
 theme = ExtResource("4_ftw3x")
 placeholder_text = "type here to speak"
 alignment = 1
 max_length = 80
 
-[node name="Tip" type="Label" parent="Screens/Play"]
+[node name="Animation" type="AnimationPlayer" parent="Screens/Play"]
+libraries = {
+"": SubResource("AnimationLibrary_t2sxm")
+}
+
+[node name="MouseControls" type="Control" parent="Screens/Play"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChatBox" parent="Screens/Play/MouseControls" instance=ExtResource("12_kqc35")]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 270.0
+offset_bottom = 174.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_horizontal = 3
+
+[node name="Tip" type="Label" parent="Screens/Play/MouseControls"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -62.5
-offset_top = -23.0
-offset_right = 62.5
+offset_left = 237.5
+offset_top = 417.0
+offset_right = 362.5
+offset_bottom = 440.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("4_ftw3x")
@@ -480,13 +507,7 @@ text = "press 'enter' to talk"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Animation" type="AnimationPlayer" parent="Screens/Play"]
-libraries = {
-"": SubResource("AnimationLibrary_t2sxm")
-}
-
 [node name="ScreenControls" type="Control" parent="Screens/Play"]
-visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -527,23 +548,38 @@ texture_normal = ExtResource("8_sfjfa")
 texture_pressed = ExtResource("9_uqbsb")
 action = "move_backward"
 
-[node name="ChatButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls"]
-visible = false
-position = Vector2(535, 62)
+[node name="HBoxContainer" type="HBoxContainer" parent="Screens/Play/ScreenControls"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -200.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Control2" type="Control" parent="Screens/Play/ScreenControls/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Joystick" parent="Screens/Play/ScreenControls/HBoxContainer/Control2" instance=ExtResource("11_dqu1v")]
+position = Vector2(100, 100)
+scale = Vector2(2, 2)
+
+[node name="ChatBox" parent="Screens/Play/ScreenControls/HBoxContainer" instance=ExtResource("12_kqc35")]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="Screens/Play/ScreenControls/HBoxContainer"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+
+[node name="ChatButton" type="TouchScreenButton" parent="Screens/Play/ScreenControls/HBoxContainer/Control"]
+position = Vector2(57, 62)
 scale = Vector2(1.1875, 1.1875)
 texture_normal = ExtResource("10_q41dt")
 action = "chat"
-
-[node name="Joystick" parent="Screens/Play/ScreenControls" instance=ExtResource("11_dqu1v")]
-position = Vector2(71, 72)
-
-[node name="ChatBox" parent="Screens/Play" instance=ExtResource("12_kqc35")]
-custom_minimum_size = Vector2(300, 150)
-layout_mode = 1
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -330.0
-offset_bottom = -200.0
 
 [node name="Verify" type="Control" parent="Screens"]
 visible = false
@@ -624,9 +660,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 475.5
+offset_left = -484.5
 offset_top = -32.0
-offset_right = 672.5
+offset_right = -287.5
 offset_bottom = -9.0
 grow_horizontal = 2
 theme = ExtResource("4_ftw3x")
@@ -674,6 +710,8 @@ offset_top = 10.0
 offset_right = -10.0
 offset_bottom = 26.0
 grow_horizontal = 0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(24, 0)
 tooltip_text = "Toggle the app full-screen."
 shortcut = SubResource("Shortcut_dqw6d")
 icon = ExtResource("20_ncduf")

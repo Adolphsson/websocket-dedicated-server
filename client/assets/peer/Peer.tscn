@@ -423,18 +423,21 @@ position = Vector2(0, -6)
 script = ExtResource("2_pfoyg")
 
 [node name="body" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_p37wa")
 position = Vector2(1, -11)
 texture = ExtResource("6_qu6wm")
 hframes = 10
 
 [node name="eyes" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_p37wa")
 position = Vector2(1, -10)
 texture = ExtResource("7_fn0e6")
 hframes = 10
 
 [node name="hairstyles" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_p37wa")
 position = Vector2(1, -10)
 texture = ExtResource("8_rslb4")
@@ -447,18 +450,21 @@ texture = ExtResource("9_yjkei")
 hframes = 10
 
 [node name="shoes" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_p37wa")
 position = Vector2(1, -11)
 texture = ExtResource("10_rdtla")
 hframes = 10
 
 [node name="top" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_p37wa")
 position = Vector2(1, -11)
 texture = ExtResource("11_vidca")
 hframes = 10
 
 [node name="bottoms" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_p37wa")
 position = Vector2(1, -11)
 texture = ExtResource("12_un61p")
@@ -473,4 +479,5 @@ libraries = {
 texture_filter = 1
 offset_top = -30.0
 offset_right = 9.0
+pivot_offset = Vector2(8, 30)
 tooltip_text = ""

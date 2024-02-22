@@ -433,42 +433,49 @@ position = Vector2(0, -6)
 script = ExtResource("2_pfoyg")
 
 [node name="body" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_nfx75")
 position = Vector2(1, -11)
 texture = ExtResource("6_4ro0j")
 hframes = 10
 
 [node name="eyes" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_nfx75")
 position = Vector2(1, -10)
 texture = ExtResource("7_l2fkj")
 hframes = 10
 
 [node name="hairstyles" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_nfx75")
 position = Vector2(1, -10)
 texture = ExtResource("8_r0blp")
 hframes = 10
 
 [node name="mouths" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_nfx75")
 position = Vector2(1, -11)
 texture = ExtResource("9_matm2")
 hframes = 10
 
 [node name="shoes" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_nfx75")
 position = Vector2(1, -11)
 texture = ExtResource("10_3adp8")
 hframes = 10
 
 [node name="top" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_nfx75")
 position = Vector2(1, -11)
 texture = ExtResource("11_fpl2m")
 hframes = 10
 
 [node name="bottoms" type="Sprite2D" parent="Traits"]
+texture_filter = 6
 material = SubResource("ShaderMaterial_nfx75")
 position = Vector2(1, -11)
 texture = ExtResource("12_6skwg")

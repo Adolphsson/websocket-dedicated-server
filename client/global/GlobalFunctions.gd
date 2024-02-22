@@ -6,7 +6,7 @@ func string_to_vector2(s: String) -> Vector2:
 	return Vector2(int(parts[0]), int(parts[1]))
 
 
-func vector2_to_string(vec: Vector2) -> String:
+func vector2_to_string(vec: Vector2i) -> String:
 	return "(%s, %s)" % [vec.x, vec.y]
 
 func get_guid() -> String:
