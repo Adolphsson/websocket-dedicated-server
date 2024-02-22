@@ -58,24 +58,7 @@ wss.on('connection', (ws, req) => {
 
     ws.on('message', (data, isBinary) => {
         const message = isBinary ? data : data.toString();
-        /*if (typeof message === 'object') {
-            if (message.type === 'Buffer') {
-                //message.data
-            }
-            else {
-                ws.close(4000, STR_INVALID_TRANSFER_MODE);
-			    return;
-            }
-        }
-
-        if (typeof message !== 'string') {
-            console.log('Message type: ' + typeof message)
-            if (typeof message === 'object') {
-                console.log('Object is: ' + JSON.stringify(message))
-            }
-			//ws.close(4000, STR_INVALID_TRANSFER_MODE);
-			//return;
-		}*/
+        
         if (typeof message === 'string') {
             try {
                 //All the messages received should be in this format: {action:actionHandler, data:data}.
@@ -103,12 +86,19 @@ wss.on('connection', (ws, req) => {
                 ws.close(code, e.message);
             }
         }
+        else {
+            console.log('Message type: ' + typeof message)
+            if (typeof message === 'object') {
+                console.log('Object is: ' + JSON.stringify(message))
+            }
+            ws.close(4000, STR_INVALID_TRANSFER_MODE);
+        }
     });
 
     //Whenever the user closes the connection, it saves its state collection, broadcast to all other players that the player left and delete its state collection and uuid.
     ws.on('close', (code, data) => {
-        const reason = data.toString();
-        console.log(`User disconnected: ${reason}`);
+        //const reason = data.toString();
+        //console.log(`User disconnected: ${reason}`);
         if (uuidToUsername[ws.playerUUID] && playerStateCollection[uuidToUsername[ws.playerUUID]]) {
             savePlayerData(uuidToUsername[ws.playerUUID], playerStateCollection[uuidToUsername[ws.playerUUID]]);
             broadcast(wss,ws, {data:{function:'despawn_player', parameters:{username:uuidToUsername[ws.playerUUID]}}})
