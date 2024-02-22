@@ -57,10 +57,11 @@ wss.on('connection', (ws, req) => {
     ws.send(JSON.stringify({ action: 'assignUUID', uuid: ws.playerUUID, id: ws.peerID }));
 
     ws.on('message', (message) => {
-        /*if (typeof message !== 'string') {
-			ws.close(4000, STR_INVALID_TRANSFER_MODE);
-			return;
-		}*/
+        if (typeof message !== 'string') {
+            console.log('Message type: ' + typeof message)
+			//ws.close(4000, STR_INVALID_TRANSFER_MODE);
+			//return;
+		}
         try {
             //All the messages received should be in this format: {action:actionHandler, data:data}.
             const parsed = JSON.parse(message);
@@ -82,7 +83,7 @@ wss.on('connection', (ws, req) => {
 
     //Whenever the user closes the connection, it saves its state collection, broadcast to all other players that the player left and delete its state collection and uuid.
     ws.on('close', () => {
-        if (uuidToUsername[ws.playerUUID]) {
+        if (uuidToUsername[ws.playerUUID] && playerStateCollection[uuidToUsername[ws.playerUUID]]) {
             savePlayerData(uuidToUsername[ws.playerUUID], playerStateCollection[uuidToUsername[ws.playerUUID]]);
             broadcast(wss,ws, {data:{function:'despawn_player', parameters:{username:uuidToUsername[ws.playerUUID]}}})
             delete playerStateCollection[uuidToUsername[ws.playerUUID]]
