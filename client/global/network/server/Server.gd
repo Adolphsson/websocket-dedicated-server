@@ -112,10 +112,10 @@ func load_player_state(userData):
 	peer.initialize({
 		"iceServers": [ { "urls": ["stun:stun.l.google.com:19302"] } ]
 	})
-	peer.session_description_created.connect(self._offer_created.bind(userData["playerID"]))
-	peer.ice_candidate_created.connect(self._new_ice_candidate.bind(userData["playerID"]))
-	rtc_mp.add_peer(peer, userData["playerID"])
-	if userData["playerID"] < rtc_mp.get_unique_id(): # So lobby creator never creates offers.
+	peer.session_description_created.connect(self._offer_created.bind(userData["userData"]["playerID"]))
+	peer.ice_candidate_created.connect(self._new_ice_candidate.bind(userData["userData"]["playerID"]))
+	rtc_mp.add_peer(peer, userData["userData"]["playerID"])
+	if userData["userData"]["playerID"] < rtc_mp.get_unique_id(): # So lobby creator never creates offers.
 		peer.create_offer()
 
 func _new_ice_candidate(mid_name, index_name, sdp_name, id):
