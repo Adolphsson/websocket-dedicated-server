@@ -25,20 +25,6 @@ const PORT = '8080'
 const STR_TOO_MANY_PEERS = 'Too many peers connected';
 const STR_INVALID_TRANSFER_MODE = 'Invalid transfer mode, must be text';
 
-class Peer {
-	constructor(id, ws) {
-		this.id = id;
-		this.ws = ws;
-		this.lobby = '';
-		// Close connection after 1 sec if client has not joined a lobby
-		this.timeout = setTimeout(() => {
-			if (!this.lobby) {
-				ws.close(4000, STR_NO_LOBBY);
-			}
-		}, NO_LOBBY_TIMEOUT);
-	}
-}
-
 const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server started on port ${PORT}`);
 });
@@ -102,18 +88,6 @@ wss.on('connection', (ws, req) => {
             delete playerStateCollection[uuidToUsername[ws.playerUUID]]
             delete uuidToUsername[ws.playerUUID];
         }
-
-        if (ws.peer.lobby && lobbies.has(ws.peer.lobby)
-			&& lobbies.get(ws.peer.lobby).leave(peer)) {
-			lobbies.delete(ws.peer.lobby);
-			console.log(`Deleted lobby ${ws.peer.lobby}`);
-			console.log(`Open lobbies: ${lobbies.size}`);
-			ws.peer.lobby = '';
-		}
-		if (ws.peer.timeout >= 0) {
-			clearTimeout(ws.peer.timeout);
-			ws.peer.timeout = -1;
-		}
 
         delete clients[ws.playerUUID];
     });
