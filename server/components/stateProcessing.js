@@ -1,3 +1,5 @@
+const { uuidToUsername } = require('./dataHandler');
+
 //This script defines the state of the server and keeps all users updated, here you'll store which players are online, their position and whatever you want more.
 let worldState = {};
 let playerStateCollection = {

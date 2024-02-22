@@ -52,5 +52,6 @@ func update_world_state(worldState):
 					var peer = spawn_player(player, worldState[player]["P"])
 					if peer:
 						peer.update_state(worldState[player]["P"], worldState[player]["A"], worldState[player]["D"])
+						GlobalSignals.emit_signal("PLAYER_DISCOVERED", worldState[player])
 		# First world state processed
 		worldInitialising = false

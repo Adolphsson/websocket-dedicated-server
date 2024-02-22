@@ -10,7 +10,8 @@ var rtc_mp: WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new()
 
 func _ready():
 	set_process(false)
-	GlobalSignals.connect("LOAD_PLAYER_STATE", load_player_state)
+	GlobalSignals.connect("LOAD_PLAYER_STATE",load_player_state)
+	GlobalSignals.connect("PLAYER_DISCOVERED", update_player_connect)
 
 func _process(_delta: float):
 	ws.poll()
@@ -76,6 +77,7 @@ func on_data_received():
 				world.update_world_state(parsedPackage["data"])
 			"assignUUID":
 				uuid = parsedPackage["uuid"]
+				playerID = parsedPackage["id"]
 			"error":
 				GlobalSignals.emit_signal("SEND_NOTIFICATION", parsedPackage["message"])
 			"broadcast":
@@ -106,19 +108,23 @@ func on_data_received():
 	else:
 #		print("Invalid action: ", parsedPackage)
 		pass
-
+		
 func load_player_state(userData):
-	if userData.playerUUID == uuid:
+	rtc_mp.create_mesh(playerID)
+	pass
+
+func update_player_connect(userData):
+	if userData.ID == playerID:
 		pass
 
 	var peer: WebRTCPeerConnection = WebRTCPeerConnection.new()
 	peer.initialize({
 		"iceServers": [ { "urls": ["stun:stun.l.google.com:19302"] } ]
 	})
-	peer.session_description_created.connect(self._offer_created.bind(userData.playerID))
-	peer.ice_candidate_created.connect(self._new_ice_candidate.bind(userData.playerID))
-	rtc_mp.add_peer(peer, userData.playerID)
-	if userData.playerID < rtc_mp.get_unique_id(): # So lobby creator never creates offers.
+	peer.session_description_created.connect(self._offer_created.bind(userData.ID))
+	peer.ice_candidate_created.connect(self._new_ice_candidate.bind(userData.ID))
+	rtc_mp.add_peer(peer, userData.ID)
+	if userData.ID < rtc_mp.get_unique_id(): # So lobby creator never creates offers.
 		peer.create_offer()
 
 func _new_ice_candidate(mid_name, index_name, sdp_name, id):
