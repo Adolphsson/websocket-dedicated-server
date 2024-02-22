@@ -56,7 +56,8 @@ wss.on('connection', (ws, req) => {
     clients[ws.playerUUID] = ws;
     ws.send(JSON.stringify({ action: 'assignUUID', uuid: ws.playerUUID, id: ws.peerID }));
 
-    ws.on('message', (message) => {
+    ws.on('message', (data, isBinary) => {
+        const message = isBinary ? data : data.toString();
         /*if (typeof message === 'object') {
             if (message.type === 'Buffer') {
                 //message.data
@@ -80,9 +81,17 @@ wss.on('connection', (ws, req) => {
                 //All the messages received should be in this format: {action:actionHandler, data:data}.
                 const parsed = JSON.parse(message);
 
+                
                 const actionHandler = actionHandlers[parsed.action];
                 if (actionHandler) {
-                    actionHandler(wss, ws, parsed, clients);
+                    try {
+                        actionHandler(wss, ws, parsed, clients);
+                        
+                    } catch (e) {
+                        const code = e.code || 4000;
+                        console.log(`Error handling ${parsed.action} from ${ws.peerID}. Data:\n${message}`);
+                        ws.close(code, e.message);
+                    }
                 }
                 else {
                     ws.send(JSON.stringify({ status: 'error', message: 'Invalid action' }));
@@ -97,7 +106,9 @@ wss.on('connection', (ws, req) => {
     });
 
     //Whenever the user closes the connection, it saves its state collection, broadcast to all other players that the player left and delete its state collection and uuid.
-    ws.on('close', () => {
+    ws.on('close', (code, data) => {
+        const reason = data.toString();
+        console.log(`User disconnected: ${reason}`);
         if (uuidToUsername[ws.playerUUID] && playerStateCollection[uuidToUsername[ws.playerUUID]]) {
             savePlayerData(uuidToUsername[ws.playerUUID], playerStateCollection[uuidToUsername[ws.playerUUID]]);
             broadcast(wss,ws, {data:{function:'despawn_player', parameters:{username:uuidToUsername[ws.playerUUID]}}})
