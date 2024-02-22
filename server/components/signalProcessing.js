@@ -37,7 +37,13 @@ function parseMsg(ws, json, clients) {
 	const data = typeof (json['data']) === 'string' ? json['data'] : '';
 
 	if (type === CMD.OFFER || type === CMD.ANSWER || type === CMD.CANDIDATE) {
-		const dest = clients[id];
+        let dest = null;
+        for (const property in clients) {
+            if (clients[property].peerID == id) {
+                dest = clients[property];
+                break;
+            }
+        }
 		if (!dest) {
 			throw new ProtoError(4000, STR_INVALID_DEST);
 		}

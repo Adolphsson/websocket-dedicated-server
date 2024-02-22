@@ -27,11 +27,17 @@ function broadcastWorldState(wss){
     };
 
 //This is where all the checks go before broadcasting the world state to all peers.
-function stateProcess(wss){
+function stateProcess(wss, clients){
     if (Object.keys(playerStateCollection).length > 0) {
         worldState = playerStateCollection
         for (let playerId in worldState) {
             delete worldState[playerId].T
+            for (const property in clients) {
+                if (uuidToUsername[property] === playerId) {
+                    worldState[playerId].ID = clients[property].peerID;
+                    break;
+                }
+            }
         }
         worldState.T = Date.now();
 		//Verifications
