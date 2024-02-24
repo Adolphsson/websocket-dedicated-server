@@ -1,5 +1,5 @@
 //You can add all the actions that clients can request here.
-const { loadPlayerData, loadMapData, loadPlayerInventory, protoMessage } = require('./dataHandler');
+const { loadPlayerData, loadMapData, loadPlayerInventory, protoMessage, CMD } = require('./dataHandler');
 const { updatePlayerState } = require('./stateProcessing');
 const { getChatResponseAsync } = require('./npcProcessing');
 const { uuidToUsername } = require('./dataHandler');

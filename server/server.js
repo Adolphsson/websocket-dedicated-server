@@ -53,6 +53,7 @@ const wss = new WebSocket.Server({ server });
 const clients = {};
 
 //Anything the user can call via client, should be added in the actionHandlers const below.
+// Please note that there's another clone of this in dataHandler, a different solution is preferable, but this will do for now
 const CMD = {
     ERROR: {id:0,func:null}, // eslint-disable-line sort-keys
     BROADCAST: {id:1,func:(wss, ws, parsed, clients) => broadcast(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
