@@ -60,14 +60,14 @@ const CMD = {
     PLAYER_STATE: {id:3,func:(wss, ws, parsed, clients) => receivePlayerState(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
     PING: {id:4,func:(wss, ws, parsed, clients) => ping(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
     READY_PLAYER: {id:5,func:(wss, ws, parsed, clients) => readyPlayer(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
-	JOIN: {id:6,func:signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
-	ID: {id:7,func:signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
-	PEER_CONNECT: {id:8,func:signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
-	PEER_DISCONNECT: {id:9,func:signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
-	OFFER: {id:10,func:signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
-	ANSWER: {id:11,func:signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
-	CANDIDATE: {id:12,func:signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
-	SEAL: {id:13,func:signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
+	JOIN: {id:6,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
+	ID: {id:7,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
+	PEER_CONNECT: {id:8,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
+	PEER_DISCONNECT: {id:9,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
+	OFFER: {id:10,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
+	ANSWER: {id:11,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
+	CANDIDATE: {id:12,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
+	SEAL: {id:13,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients)}, // eslint-disable-line sort-keys
     ASSIGNED_ID: {id:14,func:null}, // eslint-disable-line sort-keys
 };
 
