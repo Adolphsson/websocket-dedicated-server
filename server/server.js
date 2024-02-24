@@ -323,7 +323,7 @@ wss.on('connection', (ws, req) => {
     });
 
     //Whenever the user closes the connection, it saves its state collection, broadcast to all other players that the player left and delete its state collection and uuid.
-    ws.on('close', (code, data) => {
+    ws.on('close', (code, reason) => {
         peersCount--;
         console.log(`Connection with peer ${peer.id} closed `
 			+ `with reason ${code}: ${reason}`);
