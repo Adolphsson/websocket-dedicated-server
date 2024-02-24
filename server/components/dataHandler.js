@@ -22,5 +22,13 @@ const loadPlayerData = (username) => {
     return null;
 };
 
+function protoMessage(type, id, data) {
+	return JSON.stringify({
+        'type': type,
+        'id': id,
+        'data': data || '',
+    });
+}
 
-module.exports = { savePlayerData, loadPlayerData ,uuidToUsername };
+
+module.exports = { savePlayerData, loadPlayerData ,uuidToUsername, protoMessage };

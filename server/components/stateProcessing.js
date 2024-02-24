@@ -1,4 +1,4 @@
-const { uuidToUsername } = require('./dataHandler');
+const { uuidToUsername, protoMessage } = require('./dataHandler');
 
 //This script defines the state of the server and keeps all users updated, here you'll store which players are online, their position and whatever you want more.
 let worldState = {};
@@ -24,7 +24,7 @@ const updatePlayerState = (playerId, playerState) => {
 function broadcastWorldState(wss){
     //TODO: This kind of broadcast can be very costly, try to make it location dependant and only send the update to players within viewing distance of each other 
     wss.clients.forEach(client => {
-            client.send(ProtoMessage(CMD.WORLD_STATE.id, 0, worldState));
+            client.send(protoMessage(CMD.WORLD_STATE.id, 0, worldState));
         });
     };
 
