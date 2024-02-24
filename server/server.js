@@ -135,10 +135,10 @@ class Lobby {
 
 	join(peer) {
 		const assigned = this.getPeerId(peer);
-		peer.ws.send(ProtoMessage(CMD.ID, assigned, this.mesh ? 'true' : ''));
+		peer.ws.send(ProtoMessage(CMD.ID.id, assigned, this.mesh ? 'true' : ''));
 		this.peers.forEach((p) => {
-			p.ws.send(ProtoMessage(CMD.PEER_CONNECT, assigned));
-			peer.ws.send(ProtoMessage(CMD.PEER_CONNECT, this.getPeerId(p)));
+			p.ws.send(ProtoMessage(CMD.PEER_CONNECT.id, assigned));
+			peer.ws.send(ProtoMessage(CMD.PEER_CONNECT.id, this.getPeerId(p)));
 		});
 		this.peers.push(peer);
 	}
@@ -154,7 +154,7 @@ class Lobby {
 			if (close) { // Room host disconnected, must close.
 				p.ws.close(4000, STR_HOST_DISCONNECTED);
 			} else { // Notify peer disconnect.
-				p.ws.send(ProtoMessage(CMD.PEER_DISCONNECT, assigned));
+				p.ws.send(ProtoMessage(CMD.PEER_DISCONNECT.id, assigned));
 			}
 		});
 		this.peers.splice(idx, 1);
@@ -173,7 +173,7 @@ class Lobby {
 		}
 		this.sealed = true;
 		this.peers.forEach((p) => {
-			p.ws.send(ProtoMessage(CMD.SEAL, 0));
+			p.ws.send(ProtoMessage(CMD.SEAL.id, 0));
 		});
 		console.log(`Peer ${peer.id} sealed lobby ${this.name} `
 			+ `with ${this.peers.length} peers`);
@@ -215,7 +215,7 @@ function joinLobby(peer, pLobby, mesh) {
 	console.log(`Peer ${peer.id} joining lobby ${lobbyName} `
 		+ `with ${lobby.peers.length} peers`);
 	lobby.join(peer);
-	peer.ws.send(ProtoMessage(CMD.JOIN, 0, lobbyName));
+	peer.ws.send(ProtoMessage(CMD.JOIN.id, 0, lobbyName));
 }
 
 function signalHandling(wss, peer, json, clients) {
@@ -228,7 +228,7 @@ function signalHandling(wss, peer, json, clients) {
     }
     
     // Lobby joining.
-	if (type === CMD.JOIN) {
+	if (type === CMD.JOIN.id) {
 		joinLobby(peer, data, id === 0);
 		return;
 	}
@@ -242,7 +242,7 @@ function signalHandling(wss, peer, json, clients) {
 	}
 
 	// Lobby sealing.
-	if (type === CMD.SEAL) {
+	if (type === CMD.SEAL.id) {
 		lobby.seal(peer);
 		return;
 	}
@@ -254,7 +254,7 @@ function signalHandling(wss, peer, json, clients) {
 	//   "id": DEST_ID,
 	//   "data": PAYLOAD
 	// }
-	if (type === CMD.OFFER || type === CMD.ANSWER || type === CMD.CANDIDATE) {
+	if (type === CMD.OFFER.id || type === CMD.ANSWER.id || type === CMD.CANDIDATE.id) {
 		let destId = id;
 		if (id === 1) {
 			destId = lobby.host;
@@ -283,7 +283,7 @@ wss.on('connection', (ws, req) => {
     ws.playerUUID = uuidv4();  //Attach UUID directly to the websocket connection.
     ws.peerID = id;
     clients[ws.playerUUID] = ws;
-    ws.send(ProtoMessage(MessageType.ASSIGNED_ID, 0, { uuid: ws.playerUUID, id: ws.peerID }));
+    ws.send(ProtoMessage(CMD.ASSIGNED_ID.id, 0, { uuid: ws.playerUUID, id: ws.peerID }));
 
     ws.on('message', (data, isBinary) => {
         const message = isBinary ? data : data.toString();
@@ -306,12 +306,12 @@ wss.on('connection', (ws, req) => {
                     }
                     else {
                         //ws.send(JSON.stringify({ status: 'error', message: 'Type is one way only' }));
-                        ws.send(ProtoMessage(MessageType.ERROR, 0, { message: 'Type is one way only' }));
+                        ws.send(ProtoMessage(CMD.ERROR.id, 0, { message: 'Type is one way only' }));
                     }
                 }
                 else {
                     //ws.send(JSON.stringify({ status: 'error', message: 'Invalid type' }));
-                    ws.send(ProtoMessage(MessageType.ERROR, 0, { message: 'Invalid type' }));
+                    ws.send(ProtoMessage(CMD.ERROR.id, 0, { message: 'Invalid type' }));
                 }
             } catch (e) {
                 const code = e.code || 4000;
