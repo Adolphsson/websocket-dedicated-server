@@ -59,7 +59,7 @@ function broadcast(wss, ws, parsed, clients){
 //This function will respond to the client that send the request and can be used to measure the round trip time.
 function ping(wss, ws, parsed, clients){
     ws.send(protoMessage(CMD.PING.id, 0, parsed.data));
-    ws.ping = parsed.data.prev_ping;
+    ws.ping = (ws.ping + parsed.data.prev_ping) / 2;
 };
 
 function signaling(wss, ws, parsed, clients) {
