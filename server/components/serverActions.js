@@ -2,7 +2,6 @@
 const { loadPlayerData, loadMapData ,loadPlayerInventory } = require('./dataHandler');
 const { updatePlayerState } = require('./stateProcessing');
 const { getChatResponseAsync } = require('./npcProcessing');
-const { getSignalResponseAsync } = require('./signalProcessing');
 const { uuidToUsername } = require('./dataHandler');
 
 //Here the server will match the uuid with the username, load the player data and send it back so the client can restore.
