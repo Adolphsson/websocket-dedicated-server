@@ -101,11 +101,11 @@ class Peer {
 		this.ws = ws;
 		this.lobby = '';
 		// Close connection after 1 sec if client has not joined a lobby
-		this.timeout = setTimeout(() => {
+		/*this.timeout = setTimeout(() => {
 			if (!this.lobby) {
 				ws.close(4000, STR_NO_LOBBY);
 			}
-		}, NO_LOBBY_TIMEOUT);
+		}, NO_LOBBY_TIMEOUT);*/
 	}
 }
 
