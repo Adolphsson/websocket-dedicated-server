@@ -286,14 +286,14 @@ wss.on('connection', (ws, req) => {
                 //All the messages received should be in this format: {action:CMD, data:data}.
                 const parsed = JSON.parse(message);
 
-                const typeHandler = CMD[type];
+                const typeHandler = CMD[parsed.type];
                 if (typeHandler) {
                     if(typeHandler.func) {
                         try {
                             typeHandler.func(wss, ws, parsed, clients);
                         } catch (e) {
                             const code = e.code || 4000;
-                            console.log(`Error handling ${parsed.action} from ${ws.peerID}. Data:\n${message}`);
+                            console.log(`Error handling ${parsed.type} from ${ws.peerID}. Data:\n${message}`);
                             ws.close(code, e.message);
                         }
                     }
