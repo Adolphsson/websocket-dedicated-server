@@ -286,7 +286,7 @@ wss.on('connection', (ws, req) => {
                 //All the messages received should be in this format: {action:CMD, data:data}.
                 const parsed = JSON.parse(message);
 
-                const typeHandler = CMD.find(x => x.id === parsed.type);
+                const typeHandler = CMD[Object.keys(CMD).find(prop => CMD[prop].id === parsed.type)];
                 if (typeHandler) {
                     if(typeHandler.func) {
                         try {
