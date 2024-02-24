@@ -286,7 +286,7 @@ wss.on('connection', (ws, req) => {
                 //All the messages received should be in this format: {action:CMD, data:data}.
                 const parsed = JSON.parse(message);
 
-                const typeHandler = CMD[parsed.type];
+                const typeHandler = CMD.find(x => x.id === parsed.type);
                 if (typeHandler) {
                     if(typeHandler.func) {
                         try {
@@ -299,7 +299,7 @@ wss.on('connection', (ws, req) => {
                     }
                     else {
                         //ws.send(JSON.stringify({ status: 'error', message: 'Type is one way only' }));
-                        ws.send(protoMessage(CMD.ERROR.id, 0, { message: 'Type is one way only' }));
+                        ws.send(protoMessage(CMD.ERROR.id, 0, { message: `Type ${parsed.type} is one way only` }));
                     }
                 }
                 else {
