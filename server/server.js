@@ -52,7 +52,7 @@ const server = app.listen(PORT, '0.0.0.0', () => {
 const wss = new WebSocket.Server({ server });
 const clients = {};
 
-//Anything the user can call via client, should be added in the actionHandlers const below.
+//Anything the user can call via client, should be added in the CMD const below.
 // Please note that there's another clone of this in dataHandler, a different solution is preferable, but this will do for now
 const CMD = {
     ERROR: {id:0,func:null}, // eslint-disable-line sort-keys
@@ -283,10 +283,10 @@ wss.on('connection', (ws, req) => {
         
         if (typeof message === 'string') {
             try {
-                //All the messages received should be in this format: {action:actionHandler, data:data}.
+                //All the messages received should be in this format: {action:CMD, data:data}.
                 const parsed = JSON.parse(message);
 
-                const typeHandler = actionHandlers[type];
+                const typeHandler = CMD[type];
                 if (typeHandler) {
                     if(typeHandler.func) {
                         try {
