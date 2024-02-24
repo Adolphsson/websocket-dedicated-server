@@ -304,7 +304,7 @@ wss.on('connection', (ws, req) => {
                 }
                 else {
                     //ws.send(JSON.stringify({ status: 'error', message: 'Invalid type' }));
-                    ws.send(protoMessage(CMD.ERROR.id, 0, { message: 'Invalid type' }));
+                    ws.send(protoMessage(CMD.ERROR.id, 0, { message: `Invalid type: ${parsed.type}` }));
                 }
             } catch (e) {
                 const code = e.code || 4000;

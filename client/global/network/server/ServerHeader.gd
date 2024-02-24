@@ -7,7 +7,23 @@ extends Node
 @export var lobby := "" # Will create a new lobby if empty.
 @export var mesh := true # Will use the lobby host as relay otherwise.
 
-enum MessageType {ERROR, BROADCAST, WORLD_STATE, PLAYER_STATE, PING, READY_PLAYER, JOIN, ID, PEER_CONNECT, PEER_DISCONNECT, OFFER, ANSWER, CANDIDATE, SEAL, ASSIGNED_ID}
+enum MessageType {
+	ERROR = 0, 
+	BROADCAST = 1, 
+	WORLD_STATE = 2, 
+	PLAYER_STATE = 3, 
+	PING = 4, 
+	READY_PLAYER = 5, 
+	JOIN = 6, 
+	ID = 7, 
+	PEER_CONNECT = 8, 
+	PEER_DISCONNECT = 9, 
+	OFFER = 10, 
+	ANSWER = 11, 
+	CANDIDATE = 12, 
+	SEAL = 13, 
+	ASSIGNED_ID = 14
+}
 
 var ws := WebSocketPeer.new()
 var rtc_mp: WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new()

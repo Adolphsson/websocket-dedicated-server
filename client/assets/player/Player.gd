@@ -103,4 +103,4 @@ func define_player_state():
 		"A": animations.current_animation,
 		"D": [traits.currentDirection, traits.flip, traits.traits],
 	}
-	Server.broadcast("receivePlayerState", playerState)
+	Server.broadcast(Server.MessageType.PLAYER_STATE, playerState)

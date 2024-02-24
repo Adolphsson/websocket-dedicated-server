@@ -4,7 +4,7 @@ extends ServerFunctions
 
 func _ready():
 	set_process(false)
-	GlobalSignals.connect("LOAD_PLAYER_STATE",load_player_state)
+	GlobalSignals.connect("LOAD_PLAYER_STATE", load_player_state)
 	GlobalSignals.connect("PLAYER_DISCOVERED", update_player_connect)
 
 func _process(_delta: float):
@@ -66,13 +66,15 @@ func on_data_received():
 	var parsedPackage = JSON.parse_string(package)
 	if "type" in parsedPackage:
 		var src_id = str(parsedPackage["id"]).to_int()
+		var type = str(parsedPackage["type"]).to_int()
 		var data = parsedPackage["data"]
 
-		match parsedPackage["type"]:
+		match type:
 			MessageType.PING:
 				if "sent" in data:
 					print("rtt: %s ms" % str(Time.get_ticks_msec() - data["sent"]))
 				else:
+					print("Invalid ping: ", parsedPackage["data"])
 					return false
 			MessageType.WORLD_STATE:
 				world.update_world_state(data)
@@ -82,6 +84,7 @@ func on_data_received():
 				if "function" in data and "parameters" in data:
 					call(data["function"], data["parameters"])
 				else:
+					print("Invalid broadcast: ", parsedPackage["data"])
 					return false
 			MessageType.ASSIGNED_ID:
 				uuid = data["uuid"]
@@ -107,16 +110,18 @@ func on_data_received():
 			MessageType.CANDIDATE:
 				var candidate: PackedStringArray = data.split("\n", false)
 				if candidate.size() != 3:
+					print("Invalid candidate size: ", candidate.size())
 					return false
 				if not candidate[1].is_valid_int():
+					print("Invalid candidate number: ", candidate[1])
 					return false
 				if rtc_mp.has_peer(src_id):
 					rtc_mp.get_peer(src_id).connection.add_ice_candidate(candidate[0], candidate[1].to_int(), candidate[2])
 			_:
-				print("Invalid signaling type: ", parsedPackage["data"]["type"])
+				print("Invalid message type: ", str(parsedPackage["type"]))
 				return false
 	else:
-#		print("Invalid action: ", parsedPackage)
+		print("Invalid action: ", package)
 		return false
 	return true
 		
@@ -125,8 +130,8 @@ func load_player_state(userData):
 	pass
 
 func update_player_connect(userData):
-	if userData.ID == playerID:
-		pass
+	if (not "ID" in userData) or userData.ID == playerID:
+		return
 
 	var peer: WebRTCPeerConnection = WebRTCPeerConnection.new()
 	peer.initialize({
