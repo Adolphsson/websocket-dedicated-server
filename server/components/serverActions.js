@@ -37,7 +37,14 @@ function broadcast(wss, ws, parsed, clients){
             // A chat message is being sent, let's read it and send it to chatGPT for a response
             getChatResponseAsync(parsed.data.parameters.username, parsed.data.parameters.text).then(msg => {
                 wss.clients.forEach(client => {
-                    client.send(protoMessage(CMD.BROADCAST.id, 0, {action:'broadcast', data: {function: 'receive_text', parameters: {username: 'Bengt', text: msg, position: '(' + npcPos[0].toString() + ',' + npcPos[1].toString() + ')', audioIndex: Math.round(Math.random()*6)}}}));
+                    // Don't spam the players on slow network connections
+                    if(client.count * 100 > client.ping) {
+                        client.send(protoMessage(CMD.BROADCAST.id, 0, {action:'broadcast', data: {function: 'receive_text', parameters: {username: 'Bengt', text: msg, position: '(' + npcPos[0].toString() + ',' + npcPos[1].toString() + ')', audioIndex: Math.round(Math.random()*6)}}}));
+                        client.count = 0;
+                    }
+                    else {
+                        client.count++;
+                    }
                 });
             });
         }
@@ -52,6 +59,7 @@ function broadcast(wss, ws, parsed, clients){
 //This function will respond to the client that send the request and can be used to measure the round trip time.
 function ping(wss, ws, parsed, clients){
     ws.send(protoMessage(CMD.PING.id, 0, parsed.data));
+    ws.ping = parsed.data.prev_ping;
 };
 
 function signaling(wss, ws, parsed, clients) {

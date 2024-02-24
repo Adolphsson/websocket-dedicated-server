@@ -275,6 +275,8 @@ wss.on('connection', (ws, req) => {
 
     ws.playerUUID = uuidv4();  //Attach UUID directly to the websocket connection.
     ws.peerID = id;
+    ws.ping = 150; // Take it a bit slow before receiving the first ping
+    ws.count = 0;
     clients[ws.playerUUID] = ws;
     ws.send(protoMessage(CMD.ASSIGNED_ID.id, 0, { uuid: ws.playerUUID, id: ws.peerID }));
 
@@ -360,5 +362,5 @@ setInterval(() => {
     stateProcess(wss, clients); //Here you'll run the server state processing, which will keep the game synched.
     //You can run anything else below.
 
-}, 500);
+}, 100);
 
