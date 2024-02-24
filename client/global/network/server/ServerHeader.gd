@@ -3,7 +3,7 @@ extends Node
 
 @onready var world = get_node("/root/World")
 
-@export var autojoin := true
+@export var autojoin := false
 @export var lobby := "" # Will create a new lobby if empty.
 @export var mesh := true # Will use the lobby host as relay otherwise.
 

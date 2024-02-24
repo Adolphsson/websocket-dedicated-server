@@ -360,5 +360,5 @@ setInterval(() => {
     stateProcess(wss, clients); //Here you'll run the server state processing, which will keep the game synched.
     //You can run anything else below.
 
-}, 100);
+}, 500);
 
