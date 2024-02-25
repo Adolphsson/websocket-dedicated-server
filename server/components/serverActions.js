@@ -13,14 +13,14 @@ function readyPlayer(wss, peer, parsed) {
             return
         }
     }
-    uuidToUsername[ws.playerUUID] = parsed.data.username;
-    const data = {userData: loadPlayerData(parsed.data.username), playerUUID: ws.playerUUID, playerID: ws.peerID};
-    if (data) ws.send(protoMessage(CMD.BROADCAST.id, 0, {function:'load_player_state',parameters:data}));
+    uuidToUsername[peer.ws.playerUUID] = parsed.data.username;
+    const data = {userData: loadPlayerData(parsed.data.username), playerUUID: peer.ws.playerUUID, playerID: peer.id};
+    if (data) peer.ws.send(protoMessage(CMD.BROADCAST.id, 0, {function:'load_player_state',parameters:data}));
 }
 
 //This function will receive the player's current state, such as position, animation and etc, and it will send to all the other players online via updatePlayerState().
 function receivePlayerState(wss, peer, parsed) {
-    updatePlayerState(uuidToUsername[ws.playerUUID], parsed.data);
+    updatePlayerState(uuidToUsername[peer.ws.playerUUID], parsed.data);
 }
 
 //This script you can use to send fast packages between players, without the need of running any backend function. All you need is create the action in the client.
