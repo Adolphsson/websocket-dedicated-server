@@ -184,6 +184,7 @@ let peersCount = 0;
 
 function joinLobby(peer, pLobby, mesh) {
 	let lobbyName = pLobby;
+    console.log(`Join Lobby peer: ${peer.id}, lobby: ${lobbyName} mesh: ${mesh}`)
 	if (lobbyName === '') {
 		if (lobbies.size >= MAX_LOBBIES) {
 			throw new ProtoError(4000, STR_TOO_MANY_LOBBIES);
