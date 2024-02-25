@@ -296,7 +296,8 @@ wss.on('connection', (ws, req) => {
                         } catch (e) {
                             const code = e.code || 4000;
                             console.log(`Error handling ${parsed.type} from ${ws.peerID}. Data:\n${message}`);
-                            ws.close(code, e.message);
+                            // Don't close connection just because a message handling failed, it could be that the user already was in a lobbe when they tried to join toe example
+                            //ws.close(code, e.message);
                         }
                     }
                     else {
