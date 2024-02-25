@@ -37,7 +37,7 @@ function broadcast(wss, ws, parsed, clients){
             // A chat message is being sent, let's read it and send it to chatGPT for a response
             getChatResponseAsync(parsed.data.parameters.username, parsed.data.parameters.text).then(msg => {
                 wss.clients.forEach(client => {
-                    client.send(protoMessage(CMD.BROADCAST.id, 0, protoMessage(CMD.BROADCAST.id, 0, {function: 'receive_text', parameters: {username: 'Bengt', text: msg, position: '(' + npcPos[0].toString() + ',' + npcPos[1].toString() + ')', audioIndex: Math.round(Math.random()*6)}})));
+                    client.send(protoMessage(CMD.BROADCAST.id, 0, {function: 'receive_text', parameters: {username: 'Bengt', text: msg, position: '(' + npcPos[0].toString() + ',' + npcPos[1].toString() + ')', audioIndex: Math.round(Math.random()*6)}}));
                 });
             });
         }
