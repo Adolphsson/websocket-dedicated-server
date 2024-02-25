@@ -56,19 +56,19 @@ const clients = {};
 // Please note that there's another clone of this in dataHandler, a different solution is preferable, but this will do for now
 const CMD = {
     ERROR: {id:0,func:null}, // eslint-disable-line sort-keys
-    BROADCAST: {id:1,func:(wss, ws, parsed, clients) => broadcast(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+    BROADCAST: {id:1,func:(wss, ws, parsed, clients, peer) => broadcast(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
     WORLD_STATE: {id:2,func:null}, // eslint-disable-line sort-keys
-    PLAYER_STATE: {id:3,func:(wss, ws, parsed, clients) => receivePlayerState(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-    PING: {id:4,func:(wss, ws, parsed, clients) => ping(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-    READY_PLAYER: {id:5,func:(wss, ws, parsed, clients) => readyPlayer(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	JOIN: {id:6,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	ID: {id:7,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	PEER_CONNECT: {id:8,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	PEER_DISCONNECT: {id:9,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	OFFER: {id:10,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	ANSWER: {id:11,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	CANDIDATE: {id:12,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	SEAL: {id:13,func:(wss, ws, parsed, clients) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+    PLAYER_STATE: {id:3,func:(wss, ws, parsed, clients, peer) => receivePlayerState(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+    PING: {id:4,func:(wss, ws, parsed, clients, peer) => ping(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+    READY_PLAYER: {id:5,func:(wss, ws, parsed, clients, peer) => readyPlayer(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+	JOIN: {id:6,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+	ID: {id:7,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+	PEER_CONNECT: {id:8,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+	PEER_DISCONNECT: {id:9,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+	OFFER: {id:10,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+	ANSWER: {id:11,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+	CANDIDATE: {id:12,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+	SEAL: {id:13,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
     ASSIGNED_ID: {id:14,func:null}, // eslint-disable-line sort-keys
 };
 
