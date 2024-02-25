@@ -37,14 +37,7 @@ function broadcast(wss, ws, parsed, clients){
             // A chat message is being sent, let's read it and send it to chatGPT for a response
             getChatResponseAsync(parsed.data.parameters.username, parsed.data.parameters.text).then(msg => {
                 wss.clients.forEach(client => {
-                    // Don't spam the players on slow network connections
-                    if(client.count * 100 > client.ping) {
-                        client.send(protoMessage(CMD.BROADCAST.id, 0, {action:'broadcast', data: {function: 'receive_text', parameters: {username: 'Bengt', text: msg, position: '(' + npcPos[0].toString() + ',' + npcPos[1].toString() + ')', audioIndex: Math.round(Math.random()*6)}}}));
-                        client.count = 0;
-                    }
-                    else {
-                        client.count++;
-                    }
+                    client.send(protoMessage(CMD.BROADCAST.id, 0, {action:'broadcast', data: {function: 'receive_text', parameters: {username: 'Bengt', text: msg, position: '(' + npcPos[0].toString() + ',' + npcPos[1].toString() + ')', audioIndex: Math.round(Math.random()*6)}}}));
                 });
             });
         }

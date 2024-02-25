@@ -24,7 +24,14 @@ const updatePlayerState = (playerId, playerState) => {
 function broadcastWorldState(wss){
     //TODO: This kind of broadcast can be very costly, try to make it location dependant and only send the update to players within viewing distance of each other 
     wss.clients.forEach(client => {
-            client.send(protoMessage(CMD.WORLD_STATE.id, 0, worldState));
+            // Don't spam the players on slow network connections
+            if(client.count * 100 > client.ping) {
+                client.send(protoMessage(CMD.WORLD_STATE.id, 0, worldState));
+                client.count = 0;
+            }
+            else {
+                client.count++;
+            }
         });
     };
 
