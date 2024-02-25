@@ -56,19 +56,19 @@ const clients = {};
 // Please note that there's another clone of this in dataHandler, a different solution is preferable, but this will do for now
 const CMD = {
     ERROR: {id:0,func:null}, // eslint-disable-line sort-keys
-    BROADCAST: {id:1,func:(wss, ws, parsed, clients, peer) => broadcast(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+    BROADCAST: {id:1,func:(wss, peer, parsed) => broadcast(wss, peer, parsed)}, // eslint-disable-line sort-keys
     WORLD_STATE: {id:2,func:null}, // eslint-disable-line sort-keys
-    PLAYER_STATE: {id:3,func:(wss, ws, parsed, clients, peer) => receivePlayerState(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-    PING: {id:4,func:(wss, ws, parsed, clients, peer) => ping(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-    READY_PLAYER: {id:5,func:(wss, ws, parsed, clients, peer) => readyPlayer(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	JOIN: {id:6,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	ID: {id:7,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	PEER_CONNECT: {id:8,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	PEER_DISCONNECT: {id:9,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	OFFER: {id:10,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	ANSWER: {id:11,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	CANDIDATE: {id:12,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
-	SEAL: {id:13,func:(wss, ws, parsed, clients, peer) => signalHandling(wss, ws, parsed, clients, peer)}, // eslint-disable-line sort-keys
+    PLAYER_STATE: {id:3,func:(wss, peer, parsed) => receivePlayerState(wss, peer, parsed)}, // eslint-disable-line sort-keys
+    PING: {id:4,func:(wss, peer, parsed) => ping(wss, peer, parsed)}, // eslint-disable-line sort-keys
+    READY_PLAYER: {id:5,func:(wss, peer, parsed) => readyPlayer(wss, peer, parsed)}, // eslint-disable-line sort-keys
+	JOIN: {id:6,func:(wss, peer, parsed) => signalHandling(wss, peer, parsed)}, // eslint-disable-line sort-keys
+	ID: {id:7,func:(wss, peer, parsed) => signalHandling(wss, peer, parsed)}, // eslint-disable-line sort-keys
+	PEER_CONNECT: {id:8,func:(wss, peer, parsed) => signalHandling(wss, peer, parsed)}, // eslint-disable-line sort-keys
+	PEER_DISCONNECT: {id:9,func:(wss, peer, parsed) => signalHandling(wss, peer, parsed)}, // eslint-disable-line sort-keys
+	OFFER: {id:10,func:(wss, peer, parsed) => signalHandling(wss, peer, parsed)}, // eslint-disable-line sort-keys
+	ANSWER: {id:11,func:(wss, peer, parsed) => signalHandling(wss, peer, parsed)}, // eslint-disable-line sort-keys
+	CANDIDATE: {id:12,func:(wss, peer, parsed) => signalHandling(wss, peer, parsed)}, // eslint-disable-line sort-keys
+	SEAL: {id:13,func:(wss, peer, parsed) => signalHandling(wss, peer, parsed)}, // eslint-disable-line sort-keys
     ASSIGNED_ID: {id:14,func:null}, // eslint-disable-line sort-keys
 };
 
@@ -187,7 +187,6 @@ function joinLobby(peer, pLobby, mesh) {
     if(!peer.id) {
         return;
     }
-    console.log(`Join Lobby peer: ${peer.id}, lobby: ${lobbyName} mesh: ${mesh}`)
 	if (lobbyName === '') {
 		if (lobbies.size >= MAX_LOBBIES) {
 			throw new ProtoError(4000, STR_TOO_MANY_LOBBIES);
@@ -215,7 +214,7 @@ function joinLobby(peer, pLobby, mesh) {
 	peer.ws.send(protoMessage(CMD.JOIN.id, 0, lobbyName));
 }
 
-function signalHandling(wss, ws, json, clients, peer) {
+function signalHandling(wss, peer, json) {
     const type = typeof (json['type']) === 'number' ? Math.floor(json['type']) : -1;
     const id = typeof (json['id']) === 'number' ? Math.floor(json['id']) : -1;
     const data = typeof (json['data']) === 'string' ? json['data'] : '';
@@ -296,7 +295,7 @@ wss.on('connection', (ws, req) => {
                 if (typeHandler) {
                     if(typeHandler.func) {
                         try {
-                            typeHandler.func(wss, ws, parsed, clients, peer);
+                            typeHandler.func(wss, peer, parsed);
                         } catch (e) {
                             const code = e.code || 4000;
                             console.log(`Error handling ${parsed.type} from ${ws.peerID}. Data:\n${message}`);
@@ -350,7 +349,7 @@ wss.on('connection', (ws, req) => {
         //console.log(`User disconnected: ${reason}`);
         if (uuidToUsername[ws.playerUUID] && playerStateCollection[uuidToUsername[ws.playerUUID]]) {
             savePlayerData(uuidToUsername[ws.playerUUID], playerStateCollection[uuidToUsername[ws.playerUUID]]);
-            broadcast(wss, ws, {data:{function:'despawn_player', parameters:{username:uuidToUsername[ws.playerUUID]}}})
+            broadcast(wss, peer, {data:{function:'despawn_player', parameters:{username:uuidToUsername[ws.playerUUID]}}})
             delete playerStateCollection[uuidToUsername[ws.playerUUID]]
             delete uuidToUsername[ws.playerUUID];
         }

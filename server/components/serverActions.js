@@ -5,11 +5,11 @@ const { getChatResponseAsync } = require('./npcProcessing');
 const { uuidToUsername } = require('./dataHandler');
 
 //Here the server will match the uuid with the username, load the player data and send it back so the client can restore.
-function readyPlayer(wss, ws, parsed, clients, peer) {
+function readyPlayer(wss, peer, parsed) {
     for (let id in uuidToUsername){
         if (parsed.data.username == uuidToUsername[id]){
-            ws.send(protoMessage(CMD.PING.id, 0, {message: 'Already connected...'}));
-            ws.close()
+            peer.ws.send(protoMessage(CMD.PING.id, 0, {message: 'Already connected...'}));
+            peer.ws.close()
             return
         }
     }
@@ -19,12 +19,12 @@ function readyPlayer(wss, ws, parsed, clients, peer) {
 }
 
 //This function will receive the player's current state, such as position, animation and etc, and it will send to all the other players online via updatePlayerState().
-function receivePlayerState(wss, ws, parsed, clients, peer) {
+function receivePlayerState(wss, peer, parsed) {
     updatePlayerState(uuidToUsername[ws.playerUUID], parsed.data);
 }
 
 //This script you can use to send fast packages between players, without the need of running any backend function. All you need is create the action in the client.
-function broadcast(wss, ws, parsed, clients, peer){
+function broadcast(wss, peer, parsed){
     if(parsed.data.parameters.position) {
         var position = parsed.data.parameters.position.replace('(', '').replace(')', '').split(',');
         for (var i = 0; i < position.length; i++) {
@@ -50,15 +50,15 @@ function broadcast(wss, ws, parsed, clients, peer){
 };
 
 //This function will respond to the client that send the request and can be used to measure the round trip time.
-function ping(wss, ws, parsed, clients, peer){
-    ws.send(protoMessage(CMD.PING.id, 0, parsed.data));
+function ping(wss, peer, parsed){
+    peer.ws.send(protoMessage(CMD.PING.id, 0, parsed.data));
     if(parsed.data.prev_ping) {
-        ws.ping = (ws.ping + parsed.data.prev_ping) / 2;
+        peer.ws.ping = (peer.ws.ping + parsed.data.prev_ping) / 2;
     }
 };
 
-function signaling(wss, ws, parsed, clients, peer) {
-    getSignalResponse(wss, ws, parsed.data, clients);
+function signaling(wss, peer, parsed) {
+    getSignalResponse(wss, peer.ws, parsed.data);
 }
 
 module.exports = { readyPlayer, receivePlayerState, broadcast, ping, signaling };
