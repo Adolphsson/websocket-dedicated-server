@@ -260,7 +260,7 @@ function signalHandling(wss, peer, json) {
 		if (!dest) {
 			throw new ProtoError(4000, STR_INVALID_DEST);
 		}
-		dest.ws.send(ProtoMessage(type, lobby.getPeerId(peer), data));
+		dest.ws.send(protoMessage(type, lobby.getPeerId(peer), data));
 		return;
 	}
     throw new ProtoError(4000, STR_INVALID_CMD);
